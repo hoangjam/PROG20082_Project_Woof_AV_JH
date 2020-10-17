@@ -10,8 +10,7 @@
   - call each other
   - view notifications
 
-#Responsibility Division
-
+# Responsibility Division
 | Angela Villadiego 991556560  |  Jameson Hoang 991548515 |
 | :-----------:    | :-------------:   |
 | wireframes | create profile |
