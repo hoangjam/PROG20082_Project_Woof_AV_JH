@@ -12,16 +12,11 @@
 
 #Responsibility Division
 
-Angela Villadiego 991556560
-Jameson Hoang 991548515
-wireframes
-swipe card fragment
-building database
-location services/map
-log in / sign-up
+| Angela Villadiego 991556560  |  Jameson Hoang 991548515 |
+| :-----------:    | :-------------:   |
+| wireframes | create profile |
+| swipe card fragment | view profile |
+| building database | edit profile |
+| location services/map | utils |
+| log in / sign-up |  view notifications | 
 
-create profile 
-view profile
-edit profile
-utils
-view notifications
