@@ -13,10 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PROG20082_Project_AV_JH">
-        <activity android:name=".views.LandingActivity"></activity>
+<!--        <activity android:name=".views.LandingActivity"></activity>-->
         <activity
-            android:name=".views.SignUpActivity"
-            android:label="@string/title_activity_sign_up">
+            android:name=".views.LandingActivity"
+            android:label="@string/title_activity_landing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
