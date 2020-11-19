@@ -19,9 +19,9 @@
 | location services/map | utils |
 | log in / sign-up |  view notifications |
 
-![Alt text](https://imgur.com/7sWvj6H)
+![Current User Profile](https://imgur.com/RHhLGQ3)
+![Notification List](https://imgur.com/7sWvj6H)
 
-https://imgur.com/RHhLGQ3
 https://imgur.com/aD8wILW
 https://imgur.com/Qyox6yb
 https://imgur.com/0NcHmL7
