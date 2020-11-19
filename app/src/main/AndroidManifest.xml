@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PROG20082_Project_AV_JH">
+        <activity android:name=".views.LandingActivity"></activity>
         <activity
             android:name=".views.SignUpActivity"
             android:label="@string/title_activity_sign_up">
@@ -25,7 +26,7 @@
 
         <uses-library
             android:name="com.google.android.wearable"
-            android:required="true" />
+            android:required="false" />
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
