@@ -21,7 +21,7 @@
 
 ![Current User Profile](https://imgur.com/RHhLGQ3 "Current profile")
 
-![Notification List]: https://imgur.com/7sWvj6H "Notifications List"
+[Notification List]: https://imgur.com/7sWvj6H "Notifications List"
 
 https://imgur.com/aD8wILW
 https://imgur.com/Qyox6yb
