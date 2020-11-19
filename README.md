@@ -18,3 +18,22 @@
 | building database | edit profile |
 | location services/map | utils |
 | log in / sign-up |  view notifications |
+
+-----
+
+![Landing/Sign-in](https://i.imgur.com/Qyox6yb.png "Landing/Sign-in")
+
+![Sign Up](https://imgur.com/0NcHmL7.png "Sign Up")
+
+![Swipe card: Half profile](https://imgur.com/J6seO8W.png "Swipe card: Half profile")
+
+![Swipe card: Full profile](https://imgur.com/JUd9agF.png "Swipe card: Full profile")
+
+![Current User Profile](https://i.imgur.com/RHhLGQ3.png "Current profile")
+
+![Notification List](https://i.imgur.com/7sWvj6H.png "Notifications List")
+
+
+
+
+
