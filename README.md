@@ -21,10 +21,17 @@
 
 ![Current User Profile](https://i.imgur.com/RHhLGQ3.png "Current profile")
 
-[Notification List]: https://imgur.com/7sWvj6H "Notifications List"
+![Notification List](https://i.imgur.com/7sWvj6H.png "Notifications List")
 
-https://imgur.com/aD8wILW
-https://imgur.com/Qyox6yb
-https://imgur.com/0NcHmL7
-https://imgur.com/J6seO8W
-https://imgur.com/JUd9agF
+![Landing/Sign-in](https://i.imgur.com/Qyox6yb.png "Landing/Sign-in")
+
+![Sign Up](https://imgur.com/0NcHmL7.png "Sign Up")
+
+![Swipe card: Half profile](https://imgur.com/J6seO8W.png "Swipe card: Half profile")
+
+![Swipe card: Full profile](https://imgur.com/JUd9agF.png "Swipe card: Full profile")
+
+
+
+
+
