@@ -19,7 +19,7 @@
 | location services/map | utils |
 | log in / sign-up |  view notifications |
 
-![Alt text](https://imgur.com/7sWvj6H "Optional title")
+![Alt text](https://imgur.com/7sWvj6H)
 
 https://imgur.com/RHhLGQ3
 https://imgur.com/aD8wILW
