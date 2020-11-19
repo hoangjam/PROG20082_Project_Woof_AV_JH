@@ -19,7 +19,7 @@
 | location services/map | utils |
 | log in / sign-up |  view notifications |
 
-![Current User Profile](https://imgur.com/RHhLGQ3 "Current profile")
+![Current User Profile](https://i.imgur.com/RHhLGQ3.png "Current profile")
 
 [Notification List]: https://imgur.com/7sWvj6H "Notifications List"
 
