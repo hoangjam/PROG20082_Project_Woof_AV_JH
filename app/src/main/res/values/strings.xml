@@ -24,10 +24,10 @@
         <item>Male</item>
     </string-array>
 
-    <string name="title_activity_landing">WoofWoofWoof!</string>
+    <string name="info1">Welcome to Woof! Where your dog can finally meet their new best friend, and possible forever playdate!</string>
 
+    <string name="title_activity_landing">WoofWoofWoof!</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
