@@ -16,7 +16,12 @@
         <item name="fontFamily">@font/nunito</item>
     </style>
 
-<!--    <style name="Theme" parent="@android:style/TextAppearance">-->
+    <style name="NunitoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/nunito</item>
+    </style>
+
+
+    <!--    <style name="Theme" parent="@android:style/TextAppearance">-->
 <!--        <item name="android:textColor">@color/spacecadet</item>-->
 <!--        <item name="fontFamily">@font/nunito</item>-->
 <!--    </style>-->
