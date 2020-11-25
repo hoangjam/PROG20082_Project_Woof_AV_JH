@@ -106,20 +106,19 @@
         android:id="@+id/fabLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fabCustomSize="75sp"
-        android:layout_margin="30dp"
-        android:clickable="true"
+        android:layout_margin="12dp"
         android:backgroundTint="@android:color/holo_green_light"
+        android:clickable="true"
         android:src="@android:drawable/btn_star"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:backgroundTint="#8BC34A"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabDislike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fabCustomSize="75sp"
-        android:layout_margin="30dp"
+        android:layout_margin="12dp"
         android:clickable="true"
         android:backgroundTint="@color/bittersweet"
         android:src="@android:drawable/ic_delete"

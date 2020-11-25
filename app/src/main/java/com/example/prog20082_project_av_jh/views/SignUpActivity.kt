@@ -1,5 +1,6 @@
 package com.example.prog20082_project_av_jh.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -46,7 +47,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         if(v != null){
             when(v.id){
                 btnSignUp.id ->{
-
+                    goToMain()
                 }
             }
         }
@@ -66,6 +67,12 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         edtPhoneNumber.setAutofillHints(View.AUTOFILL_HINT_PHONE)
         edtPassword.setAutofillHints(View.AUTOFILL_HINT_PASSWORD)
         edtDogName.setAutofillHints(View.AUTOFILL_HINT_NAME)
+    }
+
+    private fun goToMain() {
+        val mainIntent = Intent(this, MainActivity::class.java)
+        startActivity(mainIntent)
+        this@SignUpActivity.finishAffinity()
     }
 
 }

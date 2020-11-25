@@ -6,7 +6,7 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_swipe_half"
             android:icon="@drawable/pawprint_64"
             android:title="Home" />
         <item

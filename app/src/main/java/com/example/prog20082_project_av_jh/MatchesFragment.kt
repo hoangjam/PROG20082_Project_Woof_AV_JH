@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.prog20082_project_av_jh.dummy.DummyContent
 
 /**
  * A fragment representing a list of Items.
@@ -38,7 +37,6 @@ class MatchesFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyNotificationRecyclerViewAdapter(DummyContent.ITEMS)
             }
         }
         return view

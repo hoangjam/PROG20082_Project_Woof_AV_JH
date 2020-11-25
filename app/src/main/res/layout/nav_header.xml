@@ -13,6 +13,7 @@
     android:theme="@style/Theme.PROG20082_Project_AV_JH">
 
     <ImageButton
+        android:layout_marginTop="20dp"
         android:id="@+id/btnProfile"
         android:layout_width="100dp"
         android:layout_height="100dp"
