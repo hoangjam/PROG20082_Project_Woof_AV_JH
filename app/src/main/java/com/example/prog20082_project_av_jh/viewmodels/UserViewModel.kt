@@ -30,5 +30,5 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         matchedUser = MutableLiveData()
     }
 
-    fun insertAll(user: User) = 
+//    fun insertAll(user: User) =
 }
