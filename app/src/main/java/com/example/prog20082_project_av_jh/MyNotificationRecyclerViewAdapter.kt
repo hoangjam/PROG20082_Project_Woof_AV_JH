@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-import com.example.prog20082_project_av_jh.dummy.DummyContent.DummyItem
+//import com.example.prog20082_project_av_jh.dummy.DummyContent.DummyItem
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem].
  * TODO: Replace the implementation with code for your data type.
  */
 class MyNotificationRecyclerViewAdapter(
-    private val values: List<DummyItem>
+//    private val values: List<DummyItem>
 ) : RecyclerView.Adapter<MyNotificationRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
