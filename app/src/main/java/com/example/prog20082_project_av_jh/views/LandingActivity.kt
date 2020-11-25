@@ -12,7 +12,7 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener {
 
     val TAG: String = this@LandingActivity.toString()
 
-    lateinit var  btnSignUp: Button
+    lateinit var btnSignUp: Button
 //    lateinit var userViewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,9 +29,7 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener {
             if(v.id == btnSignUp.id){
                 this.goToSignUp()
             }
-//            else if(v.id == btnSignIn.id){
-//                this.goToSignIn()
-//            }
+            // add in signin to go to the swiping card fragments
         }
     }
 
