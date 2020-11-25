@@ -10,4 +10,4 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".NotificationFragment"
-    tools:listitem="@layout/notification_fragment" />
+    tools:listitem="@layout/match_fragment" />
