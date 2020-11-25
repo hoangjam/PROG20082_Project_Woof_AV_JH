@@ -22,6 +22,7 @@
     <string-array name="gender_array">
         <item>Female</item>
         <item>Male</item>
+        <item>Unknown</item>
     </string-array>
 
     <string name="info1">Welcome to Woof! Where your dog can finally meet their new best friend, and possible forever playdate!</string>
