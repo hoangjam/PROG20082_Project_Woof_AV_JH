@@ -32,8 +32,6 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
 
-
-
     </fragment>
 
     <fragment
@@ -43,10 +41,23 @@
         tools:layout="@layout/swipe_full_fragment" >
 
         <action
-            android:id="@+id/action_nav_swipe_half_to_nav_swipe_full"
-            app:destination="@id/nav_swipe_full"
-            app:popUpTo="@id/nav_swipe_half"
+            android:id="@+id/action_nav_swipe_full_to_nav_swipe_half"
+            app:destination="@id/nav_swipe_half"
             app:popExitAnim="@anim/fragment_close_enter"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+
+        <action
+            android:id="@+id/action_nav_swipe_full_to_nav_profile"
+            app:destination="@id/nav_profile"
+            app:popUpTo="@id/nav_swipe_half"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+
+        <action
+            android:id="@+id/action_nav_swipe_full_to_nav_matches"
+            app:destination="@id/nav_matches"
+            app:popUpTo="@id/nav_swipe_half"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
 
     </fragment>
@@ -57,13 +68,41 @@
         android:label="Profile"
         tools:layout="@layout/fragment_profile" >
 
+        <action
+            android:id="@+id/action_nav_profile_to_nav_swipe_half"
+            app:destination="@id/nav_swipe_half"
+            app:popUpTo="@id/nav_profile"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+
+        <action
+            android:id="@+id/action_nav_profile_to_nav_matches"
+            app:destination="@id/nav_matches"
+            app:popUpTo="@id/nav_profile"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+
     </fragment>
 
     <fragment
         android:id="@+id/nav_matches"
         android:name="com.example.prog20082_project_av_jh.MatchesFragment"
-        android:label="Home"
+        android:label="Matches"
         tools:layout="@layout/swipe_full_fragment" >
+
+        <action
+            android:id="@+id/action_nav_matches_to_nav_swipe_half"
+            app:destination="@id/nav_swipe_half"
+            app:popUpTo="@id/nav_matches"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+
+        <action
+            android:id="@+id/action_nav_matches_to_nav_profile"
+            app:destination="@id/nav_profile"
+            app:popUpTo="@id/nav_matches"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
 
     </fragment>
 

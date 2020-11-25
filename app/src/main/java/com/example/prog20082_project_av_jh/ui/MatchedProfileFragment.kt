@@ -1,4 +1,4 @@
-package com.example.prog20082_project_av_jh.views
+package com.example.prog20082_project_av_jh.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
