@@ -18,7 +18,7 @@ class MyNotificationRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.notification_fragment, parent, false)
+            .inflate(R.layout.match_fragment, parent, false)
         return ViewHolder(view)
     }
 

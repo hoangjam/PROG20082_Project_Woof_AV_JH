@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         android:scaleType="centerCrop"
         android:layout_margin="@dimen/text_margin"
-        android:src="@drawable/whiteDog"
+        android:src="@drawable/samara"
         android:layout_gravity="center"/>
 
     <LinearLayout
@@ -21,7 +21,7 @@
         android:padding="16dp">
         <TextView
             android:id="@+id/tvNotificationHeader"
-            android:text="Notification Header"
+            android:text="You and Samara matched!"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/tvNotificationMessage"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit "
+            android:text="Click here to view their profile and schedule a doggy meetup!"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
