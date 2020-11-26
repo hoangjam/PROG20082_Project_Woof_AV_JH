@@ -19,7 +19,7 @@ class SwipeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.swipe_full_fragment, container, false)
+        return inflater.inflate(R.layout.swipe_half_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
