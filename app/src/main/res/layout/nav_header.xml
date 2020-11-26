@@ -10,7 +10,8 @@
     android:paddingTop="18dp"
     android:paddingRight="18dp"
     android:paddingBottom="18dp"
-    android:theme="@style/Theme.PROG20082_Project_AV_JH">
+    android:theme="@style/Theme.PROG20082_Project_AV_JH"
+    android:id="@+id/nav_header">
 
     <ImageButton
         android:layout_marginTop="20dp"
