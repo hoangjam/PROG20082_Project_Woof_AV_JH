@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".SwipeFragment">
+    tools:context=".FullSwipeFragment"
+    android:id="@+id/full_profile_layout"
+    android:clickable="true">
 
     <!--src is temporary until we can get database working-->
     <ImageView
@@ -99,13 +101,15 @@
         android:padding="12dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="76dp"
+        android:id="@+id/full_profile_scroll">
 
         <TextView
+            android:id="@+id/tvBio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
             android:textSize="18dp"/>
 
     </ScrollView>
@@ -117,6 +121,7 @@
         android:layout_margin="12dp"
         android:clickable="true"
         android:backgroundTint="@android:color/holo_green_light"
+        app:backgroundTint="#8BC34A"
         android:src="@android:drawable/btn_star"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

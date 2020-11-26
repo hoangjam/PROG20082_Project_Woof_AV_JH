@@ -3,13 +3,15 @@ package com.example.prog20082_project_av_jh.views
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
+import android.view.View
+import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,12 +21,16 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.prog20082_project_av_jh.R
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.swipe_half_fragment.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private lateinit var navController: NavController
+
+    private lateinit var header: LinearLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,13 +57,31 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        //to access header in nav bar
+        val navigationView: NavigationView = findViewById(R.id.nav_view)
+        val headerView: View = navigationView.getHeaderView(0)
+
+        header = headerView.findViewById(R.id.nav_header)
+        header.setOnClickListener(this)
     }
+
+    override fun onClick(v: View?) {
+        if (v != null) {
+            when (v.id) {
+                header.id -> {
+//                    navController.navigate()
+                }
+            }
+        }
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             android.R.id.home -> {
-                drawer_layout.openDrawer(GravityCompat.START)
-                return true
+//                drawer_layout.openDrawer(GravityCompat.START)
+//                return true
             }
 
             R.id.nav_logout -> {
@@ -81,5 +105,4 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
 }
