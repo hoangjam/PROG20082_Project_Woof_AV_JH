@@ -19,7 +19,8 @@ data class User(
         @ColumnInfo(name = "dog_name") var dName: String,
         @ColumnInfo(name = "gender") var gender: String?,
         @ColumnInfo(name = "breed") var breed: String,
-        @ColumnInfo(name = "age") var age: Int?
+        @ColumnInfo(name = "age") var age: Int?,
+        @ColumnInfo(name = "bio") var bio: String
 ){
     constructor() : this(
             "",
@@ -30,5 +31,6 @@ data class User(
             "",
             "",
             0,
+            ""
     )
 }

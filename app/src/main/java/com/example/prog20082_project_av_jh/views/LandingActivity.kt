@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
+import android.widget.Toast
 import com.example.prog20082_project_av_jh.R
 import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.activity_landing.*
@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.activity_landing.*
 class LandingActivity : AppCompatActivity(), View.OnClickListener {
 
     val TAG: String = this@LandingActivity.toString()
-
     lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,21 +23,49 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener {
         btnSignUp.setOnClickListener(this)
 
         userViewModel = UserViewModel(this.application)
+
+        this.fetchAllUsers()
+
     }
 
     override fun onClick(v: View?) {
         if (v != null) {
             if (v.id == btnSignIn.id) {
-                //TODO: Add validation
-                Log.e(
-                    TAG,
-                    "SIGNIN CLICKED ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-                );
-                this.goToMain()
+                Log.e(TAG, "SIGNIN CLICKED +++++++++++++++++++++++++++++++++++++++++++++++++")
+                if (this.validateData()) {
+                    this.validateUser()
+                }
             } else if (v.id == btnSignUp.id) {
                 this.goToSignUp()
             }
         }
+    }
+
+    private fun validateUser(){
+        val email = edtEmail.text.toString()
+        val password = edtPassword.text.toString()
+
+        userViewModel.getUserByLoginInfo(email, password)?.observe(this@LandingActivity, {matchedUser ->
+            if(matchedUser != null){
+                this.goToMain()
+            }
+            else{
+                Toast.makeText(this, "Incorrect email/password. Please try again.",
+                    Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun validateData(): Boolean {
+        if (edtEmail.text.isEmpty()) {
+            edtEmail.error = "Email cannot be empty"
+            return false
+        }
+        if (edtPassword.text.isEmpty()) {
+            edtPassword.error = "Password cannot be empty"
+            return false
+        }
+        return true
     }
 
     private fun goToMain() {
@@ -52,5 +79,12 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener {
         startActivity(signUpIntent)
     }
 
+    private fun fetchAllUsers() {
+        userViewModel.allUsers.observe(this@LandingActivity, {
+            for (user in it) {
+                Log.e(TAG, user.toString())
+            }
+        })
+    }
 
 }

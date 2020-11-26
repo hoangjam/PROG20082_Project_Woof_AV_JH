@@ -32,4 +32,6 @@ interface UserDao {
     @Query("SELECT * FROM Users WHERE email LIKE :email")
     fun getUserByEmail(email: String) : User?
 
+    @Query("SELECT * FROM Users WHERE email LIKE :email AND password LIKE :pwd")
+    fun getUserByLoginInfo(email: String, pwd: String): User?
 }

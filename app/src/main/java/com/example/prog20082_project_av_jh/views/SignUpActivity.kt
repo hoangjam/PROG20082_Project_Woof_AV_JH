@@ -47,10 +47,48 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         if(v != null){
             when(v.id){
                 btnSignUp.id ->{
-                    goToMain()
+                    if(this.validateData()){
+                        this.goToMain()
+                    }
                 }
             }
         }
+    }
+
+    fun validateData() : Boolean{
+        if(edtOwnerName.text.toString().isEmpty()){
+            edtOwnerName.error = "Please enter your name"
+            return false
+        }
+        if(edtEmail.text.toString().isEmpty()){
+            edtEmail.error = "Please enter your name"
+            return false
+        }
+        if(edtPhoneNumber.text.toString().isEmpty()){
+            edtPhoneNumber.error = "Please enter your phone number"
+            return false
+        }
+        if(edtPassword.text.toString().isEmpty()){
+            edtPassword.error = "Please enter a password"
+            return false
+        }
+        if(edtConfirmPassword.text.toString().isEmpty() || edtConfirmPassword.text.toString() != edtPassword.text.toString()){
+            edtConfirmPassword.error = "Password must match"
+            return false
+        }
+        if(edtDogName.text.toString().isEmpty()){
+            edtDogName.error = "Please enter doge name"
+            return false
+        }
+        if(edtBreed.text.toString().isEmpty()){
+            edtBreed.error = "Please enter dog breed"
+            return false
+        }
+        if(edtAge.text.toString().isEmpty()){
+            edtAge.error = "Please enter dog age"
+            return false
+        }
+        return true
     }
 
     fun initializeSpinner() {
