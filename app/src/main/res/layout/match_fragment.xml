@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         android:scaleType="centerCrop"
         android:layout_margin="@dimen/text_margin"
-        android:src="@drawable/samara"
+        android:src="@drawable/samara_ball"
         android:layout_gravity="center"/>
 
     <LinearLayout
