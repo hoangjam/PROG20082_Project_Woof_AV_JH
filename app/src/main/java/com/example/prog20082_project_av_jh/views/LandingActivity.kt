@@ -33,6 +33,7 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener {
             if (v.id == btnSignIn.id) {
                 Log.e(TAG, "SIGNIN CLICKED +++++++++++++++++++++++++++++++++++++++++++++++++")
                 if (this.validateData()) {
+                    println("inside validate data")
                     this.validateUser()
                 }
             } else if (v.id == btnSignUp.id) {
@@ -44,9 +45,12 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener {
     private fun validateUser(){
         val email = edtEmail.text.toString()
         val password = edtPassword.text.toString()
+        println("inside validate user")
 
         userViewModel.getUserByLoginInfo(email, password)?.observe(this@LandingActivity, {matchedUser ->
             if(matchedUser != null){
+                println("inside matched user")
+                this@LandingActivity.finishAndRemoveTask()
                 this.goToMain()
             }
             else{

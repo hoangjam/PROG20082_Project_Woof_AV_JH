@@ -52,7 +52,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun getUserByLoginInfoCoroutine(email: String, password: String)  = viewModelScope.launch(Dispatchers.IO) {
         val user : User? = userRepo.getUserByLoginInfo(email, password)
-//        matchedUser?.postValue(user)
+        matchedUser?.postValue(user)
     }
 
     fun getUserByLoginInfo(email: String, password: String) : MutableLiveData<User>?{

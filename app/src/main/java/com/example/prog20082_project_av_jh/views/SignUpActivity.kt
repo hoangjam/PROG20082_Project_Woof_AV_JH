@@ -3,12 +3,15 @@ package com.example.prog20082_project_av_jh.views
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.prog20082_project_av_jh.R
 import com.example.prog20082_project_av_jh.model.User
+import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import java.lang.Exception
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
     val TAG: String = this@SignUpActivity.toString()
@@ -48,11 +51,35 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             when(v.id){
                 btnSignUp.id ->{
                     if(this.validateData()){
+                        this.fetchData()
+                        this.saveUserToDB()
                         this.goToMain()
                     }
                 }
             }
         }
+    }
+    fun saveUserToDB(){
+        try{
+            var userViewModel = UserViewModel(this.application)
+            userViewModel.insertAll(user)
+        }catch (ex: Exception){
+            Log.e(TAG, ex.toString())
+            Log.e(TAG, ex.localizedMessage)
+        }
+    }
+
+    fun fetchData(){
+        user.oName = edtOwnerName.text.toString()
+        user.email = edtEmail.text.toString()
+        user.phoneNumber = edtPhoneNumber.text.toString()
+        user.password = edtPassword.text.toString()
+        user.dName = edtDogName.text.toString()
+        user.gender = selectedGender
+        user.breed = edtBreed.text.toString()
+        user.age = edtAge.text.toString().toInt()
+
+        Log.d(TAG, "User : " + user.toString())
     }
 
     fun validateData() : Boolean{
