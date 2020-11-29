@@ -20,7 +20,17 @@ data class User(
         @ColumnInfo(name = "gender") var gender: String?,
         @ColumnInfo(name = "breed") var breed: String,
         @ColumnInfo(name = "age") var age: Int?,
-        @ColumnInfo(name = "bio") var bio: String
+        @ColumnInfo(name = "bio") var bio: String,
+        // add dog ID
+        // add dog size
+        // add liked dogs array of IDs
+        // list of matches, array of IDs
+        @ColumnInfo(name = "dog_id") var dogId: Int,
+        @ColumnInfo(name = "dog_size") var dogSize: String,
+        @ColumnInfo(name = "liked_list") var likedList: MutableList<Int>,
+        @ColumnInfo(name = "matched_list") var matchedList: MutableList<Int>
+
+
 ){
     constructor() : this(
             "",
@@ -31,6 +41,11 @@ data class User(
             "",
             "",
             0,
-            ""
+            "",
+            0,
+            "",
+            // I hope this works
+            mutableListOf(),
+            mutableListOf()
     )
 }

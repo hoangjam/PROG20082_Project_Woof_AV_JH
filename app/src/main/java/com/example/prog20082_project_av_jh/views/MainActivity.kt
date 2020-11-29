@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var header: LinearLayout
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
