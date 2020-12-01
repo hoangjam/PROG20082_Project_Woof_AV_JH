@@ -1,11 +1,24 @@
 package com.example.prog20082_project_av_jh.ui
 
+import android.content.Intent
+import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.prog20082_project_av_jh.R
+import com.example.prog20082_project_av_jh.locationservices.LocationManager
+import com.example.prog20082_project_av_jh.views.DisplayMapActivity
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.activity_landing.*
+import kotlinx.android.synthetic.main.fragment_matched_profile.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,8 +30,10 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MatchedProfileFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MatchedProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+class MatchedProfileFragment : Fragment(), View.OnClickListener {
+
+    private val TAG = this.toString()
+
     private var param1: String? = null
     private var param2: String? = null
 
@@ -30,8 +45,20 @@ class MatchedProfileFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onClick(v: View?) {
+        if (v != null) {
+            if (v.id == fabLike.id) {
+                Log.e(TAG, "LOCATION BUTTON CLICKED")
+                val intent = Intent(activity, DisplayMapActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_matched_profile, container, false)
     }
@@ -48,11 +75,11 @@ class MatchedProfileFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                MatchedProfileFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
+            MatchedProfileFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
                 }
+            }
     }
 }

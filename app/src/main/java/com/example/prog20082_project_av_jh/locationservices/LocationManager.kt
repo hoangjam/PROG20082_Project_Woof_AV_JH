@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.prog20082_project_av_jh.ui.MatchedProfileFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -34,8 +35,9 @@ class LocationManager(var context: Context) {
     }
 
     init{
-
+        checkPermissions()
         getLocationProviderClient()
+        createLocationRequest()
     }
 
     fun getLocationProviderClient() : FusedLocationProviderClient{
