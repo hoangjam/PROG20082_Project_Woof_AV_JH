@@ -36,4 +36,8 @@ class UserRepository(
     fun getUserByLoginInfo(email: String, password: String) : User?{
         return userDao.getUserByLoginInfo(email, password)
     }
+
+    fun getUserLikedInfo(email: String) : User?{
+        return userDao.getUserByLikedList(email)
+    }
 }

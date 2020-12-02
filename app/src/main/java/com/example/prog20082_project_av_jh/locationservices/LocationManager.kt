@@ -23,6 +23,7 @@ Name: Jameson Hoang
 Student ID: 991548515
 Date: 2020-11-25
 */
+
 class LocationManager(var context: Context) {
     private val TAG = this.toString()
     var fusedLocationProviderClient: FusedLocationProviderClient ?= null
