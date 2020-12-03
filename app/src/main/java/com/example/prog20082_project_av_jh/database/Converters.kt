@@ -1,7 +1,6 @@
 package com.example.prog20082_project_av_jh.database
 
 import androidx.room.TypeConverter
-import com.example.prog20082_project_av_jh.model.User
 import com.google.gson.Gson
 
 /*
@@ -15,7 +14,6 @@ class Converters {
     fun listToJson(value: ArrayList<Int>?) = Gson().toJson(value)
 
     @TypeConverter
-//    fun jsonToList(value: String) = Gson().fromJson(value, ArrayList<Int>())
     fun jsonToList(value: String): ArrayList<Int>? {
         val objects = Gson().fromJson(value, Array<Int>::class.java) as ArrayList<Int>
         return objects
