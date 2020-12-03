@@ -21,14 +21,6 @@ class UserRepository(
         userDao.updateUsers(user)
     }
 
-    fun deleteUser(user: User){
-        userDao.deleteUser(user)
-    }
-
-    fun deleteUserByEmail(email: String){
-        userDao.deleteUserByEmail(email)
-    }
-
     fun getUserByEmail(email: String) : User? {
         return userDao.getUserByEmail(email)
     }
