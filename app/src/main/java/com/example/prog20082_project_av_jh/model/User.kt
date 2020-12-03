@@ -2,6 +2,10 @@ package com.example.prog20082_project_av_jh.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.TypeConverters
+import com.example.prog20082_project_av_jh.database.Converters
+import com.example.prog20082_project_av_jh.database.UserDao
+import com.example.prog20082_project_av_jh.database.WoofDatabase
 
 /*
 User: hoangjam

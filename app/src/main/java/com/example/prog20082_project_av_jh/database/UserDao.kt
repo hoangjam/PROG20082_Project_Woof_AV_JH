@@ -35,6 +35,6 @@ interface UserDao {
     @Query("SELECT * FROM Users WHERE email LIKE :email AND password LIKE :pwd")
     fun getUserByLoginInfo(email: String, pwd: String): User?
 
-    @Query("SELECT liked_list FROM Users WHERE email LIKE :email")
-    fun getUserByLikedList(email: String) : User?
+//    @Query("SELECT liked_list FROM Users WHERE email LIKE :email")
+//    fun getUserByLikedList(email: String) : User?
 }
