@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.prog20082_project_av_jh.model.User
 
 /*
@@ -12,7 +13,8 @@ Name: Jameson Hoang
 Student ID: 991548515
 Date: 2020-11-25
 */
-@Database(entities = arrayOf(User::class), version = 2)
+@Database(entities = arrayOf(User::class), version = 3)
+@TypeConverters(Converters::class)
 abstract class WoofDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
