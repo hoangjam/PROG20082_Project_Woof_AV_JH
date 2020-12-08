@@ -133,20 +133,19 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
 
-<!--        <action-->
-<!--            android:id="@+id/action_nav_matched_profile_to_nav_maps"-->
-<!--            app:destination="@id/nav_maps"-->
-<!--            app:popUpTo="@id/nav_matches"-->
-<!--            app:popExitAnim="@anim/nav_default_pop_exit_anim"-->
-<!--            app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>-->
+        <action
+            android:id="@+id/action_nav_matched_profile_to_nav_maps"
+            app:destination="@id/nav_maps"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
 
     </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_maps"-->
-<!--        android:name="com.example.prog20082_project_av_jh.ui.locationservices.MapsFragment"-->
-<!--        android:label="Maps Location"-->
-<!--        tools:layout="@layout/fragment_maps"/>-->
+    <fragment
+        android:id="@+id/nav_maps"
+        android:name="com.example.prog20082_project_av_jh.ui.locationservices.MapsFragment"
+        android:label="Maps Location"
+        tools:layout="@layout/fragment_maps"/>
 
 
 
