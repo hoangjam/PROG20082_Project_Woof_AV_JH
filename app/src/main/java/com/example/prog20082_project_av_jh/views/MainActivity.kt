@@ -14,11 +14,15 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.prog20082_project_av_jh.HalfSwipeFragment
+import com.example.prog20082_project_av_jh.MatchesFragment
 import com.example.prog20082_project_av_jh.R
+import com.example.prog20082_project_av_jh.ui.profile.ProfileFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.swipe_half_fragment.*
@@ -31,6 +35,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var header: LinearLayout
 
+    private lateinit var navHost : NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +69,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         header = headerView.findViewById(R.id.nav_header)
         header.setOnClickListener(this)
+
+        navHost = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?)!!
     }
 
     override fun onClick(v: View?) {
@@ -71,11 +78,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             when (v.id) {
                 header.id -> {
 //                    navController.navigate()
+                    Log.e("FROM MAIN ACTIVITY:+++", "header CLICKED!!! :))))))")
+                    changeFragment(ProfileFragment())
+                    onBackPressed()
                 }
             }
         }
     }
 
+    fun changeFragment (fragment: Fragment){
+        //check current fragment, alter action based on that
+        //
+        //this.navController.navigate(R.id.action_nav_swipe_half_to_nav_profile)
+
+        this.navController.navigate(R.id.nav_profile)
+
+//        val childFragment = navHost.childFragmentManager.getFragment()
+//
+//        if (childFragment is HalfSwipeFragment){
+//
+//        }else if (childFragment is MatchesFragment){
+//
+//        }
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
@@ -83,12 +108,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //                drawer_layout.openDrawer(GravityCompat.START)
 //                return true
             }
-
-            R.id.nav_logout -> {
-                this.finishAffinity()
-                val signInIntent = Intent(this, LandingActivity::class.java)
-                startActivity(signInIntent)
-            }
+//
+//            R.id.nav_logout -> {
+//                Log.e("FROM MAIN ACTIVITY::::: ++++++", "logout CLICKED!!! :))))))")
+//                this.finishAffinity()
+//                val signInIntent = Intent(this, LandingActivity::class.java)
+//                startActivity(signInIntent)
+//            }
         }
         return super.onOptionsItemSelected(item)
     }
