@@ -8,7 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import com.example.prog20082_project_av_jh.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.fragment_matched_profile.view.*
 import com.example.prog20082_project_av_jh.locationservices.LocationManager
 import com.example.prog20082_project_av_jh.views.DisplayMapActivity
 import com.google.android.gms.location.LocationCallback
@@ -31,11 +34,12 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class MatchedProfileFragment : Fragment(), View.OnClickListener {
-
-    private val TAG = this.toString()
-
+    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    lateinit var fabToMap : FloatingActionButton
+    private val TAG = this.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,22 +49,27 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onClick(v: View?) {
-        if (v != null) {
-            if (v.id == fabLike.id) {
-                Log.e(TAG, "LOCATION BUTTON CLICKED")
-                val intent = Intent(activity, DisplayMapActivity::class.java)
-                startActivity(intent)
-            }
-        }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_matched_profile, container, false)
+
+        fabToMap = view.fabLocation
+        fabToMap.setOnClickListener(this)
+
+        return view
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_matched_profile, container, false)
+    override fun onClick(v: View?) {
+        if (v != null){
+            when (v.id) {
+                fabToMap.id -> {
+                    Log.e(TAG, "LOCATION BUTTON CLICKED")
+                    val intent = Intent(activity, DisplayMapActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        }
     }
 
     companion object {

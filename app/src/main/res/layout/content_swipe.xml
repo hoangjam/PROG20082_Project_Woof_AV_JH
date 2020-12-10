@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar"
-    tools:context=".views.MainActivity">
+    tools:context=".views.MainActivity"
+    android:id="@+id/contentMain">
 
     <fragment
         android:layout_width="match_parent"

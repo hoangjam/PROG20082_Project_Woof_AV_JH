@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.matches_list_fragment.view.*
 
 /**
@@ -64,7 +65,10 @@ class MatchesFragment : Fragment(), View.OnClickListener {
     }
 
     private fun goToMatchedProfile() {
-        Navigation.findNavController(requireView()).navigate(R.id.action_nav_matches_to_matched_profile)
+        //Navigation.findNavController(requireView()).navigate(R.id.action_nav_matches_to_matched_profile)
+        //TODO: obtain nav controller instead of creating new one using supportFragmentManager
+        var navController = findNavController()
+        navController.navigate(R.id.action_nav_matches_to_matched_profile)
     }
 
     companion object {
