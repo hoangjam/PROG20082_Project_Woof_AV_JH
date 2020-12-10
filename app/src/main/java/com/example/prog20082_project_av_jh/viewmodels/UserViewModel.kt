@@ -42,14 +42,6 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         userRepo.updateUser(user)
     }
 
-    fun deleteUser(user: User) = viewModelScope.launch(Dispatchers.IO) {
-        userRepo.deleteUser(user)
-    }
-
-    fun deleteUserByEmail(email: String) = viewModelScope.launch (Dispatchers.IO){
-        userRepo.deleteUserByEmail(email)
-    }
-
     private fun getUserByLoginInfoCoroutine(email: String, password: String)  = viewModelScope.launch(Dispatchers.IO) {
         val user : User? = userRepo.getUserByLoginInfo(email, password)
         matchedUser?.postValue(user)
@@ -70,5 +62,4 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         Log.d("UserViewModel : ", matchedUser.toString())
         return matchedUser
     }
-
 }

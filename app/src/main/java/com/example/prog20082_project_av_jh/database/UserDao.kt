@@ -20,12 +20,6 @@ interface UserDao {
     @Update
     fun updateUsers(vararg users: User)
 
-    @Delete
-    fun deleteUser(user: User)
-
-    @Query("DELETE FROM Users WHERE email LIKE :email")
-    fun deleteUserByEmail(email: String)
-
     @Query("SELECT * FROM Users")
     fun getAllUsers(): LiveData<List<User>>
 
@@ -34,4 +28,7 @@ interface UserDao {
 
     @Query("SELECT * FROM Users WHERE email LIKE :email AND password LIKE :pwd")
     fun getUserByLoginInfo(email: String, pwd: String): User?
+
+//    @Query("SELECT liked_list FROM Users WHERE email LIKE :email")
+//    fun getUserByLikedList(email: String) : User?
 }

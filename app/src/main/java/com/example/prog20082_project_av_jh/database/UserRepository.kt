@@ -21,14 +21,6 @@ class UserRepository(
         userDao.updateUsers(user)
     }
 
-    fun deleteUser(user: User){
-        userDao.deleteUser(user)
-    }
-
-    fun deleteUserByEmail(email: String){
-        userDao.deleteUserByEmail(email)
-    }
-
     fun getUserByEmail(email: String) : User? {
         return userDao.getUserByEmail(email)
     }
@@ -36,4 +28,8 @@ class UserRepository(
     fun getUserByLoginInfo(email: String, password: String) : User?{
         return userDao.getUserByLoginInfo(email, password)
     }
+
+//    fun getUserLikedInfo(email: String) : User?{
+//        return userDao.getUserByLikedList(email)
+//    }
 }
