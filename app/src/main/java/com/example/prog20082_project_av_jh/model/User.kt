@@ -12,7 +12,7 @@ User: hoangjam
 Name: Jameson Hoang
 Student ID: 991548515
 Date: 2020-11-25
-*/
+*/ 
 
 @Entity(tableName = "Users", primaryKeys = arrayOf("email"))
 data class User(
