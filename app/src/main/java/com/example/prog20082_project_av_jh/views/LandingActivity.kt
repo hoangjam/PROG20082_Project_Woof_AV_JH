@@ -25,7 +25,7 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener {
         userViewModel = UserViewModel(this.application)
 
         this.fetchAllUsers()
-
+        
     }
 
     override fun onClick(v: View?) {
