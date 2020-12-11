@@ -78,6 +78,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         user.gender = selectedGender
         user.breed = edtBreed.text.toString()
         user.age = edtAge.text.toString().toInt()
+        user.bio = edtBio.text.toString()
 
         Log.d(TAG, "User : " + user.toString())
     }
