@@ -120,7 +120,7 @@ class FullSwipeFragment : Fragment(), View.OnClickListener {
         Log.e(TAG, "++++++ switching cards.......  ++++++++++")
 
         //Animate out, when finished change info, when changed animate back in
-        var anim = AnimationUtils.loadAnimation(this.requireContext(), R.anim.slide_out)
+        var anim = AnimationUtils.loadAnimation(this.requireContext(), R.anim.fade_out)
 
         anim.setAnimationListener(object: Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {
@@ -130,7 +130,7 @@ class FullSwipeFragment : Fragment(), View.OnClickListener {
             override fun onAnimationEnd(animation: Animation?) {
                 //after finished, change data, then animate in.
                 this@FullSwipeFragment.changeInfo()
-                this@FullSwipeFragment.slideViewIn()
+                this@FullSwipeFragment.fadeViewIn()
             }
 
             override fun onAnimationRepeat(animation: Animation?) {
@@ -142,8 +142,8 @@ class FullSwipeFragment : Fragment(), View.OnClickListener {
 
     }
 
-    private fun slideViewIn() {
-        var anim = AnimationUtils.loadAnimation(this.requireContext(), R.anim.slide_in)
+    private fun fadeViewIn() {
+        var anim = AnimationUtils.loadAnimation(this.requireContext(), R.anim.fade_in)
         swipeView.startAnimation(anim)
     }
 
