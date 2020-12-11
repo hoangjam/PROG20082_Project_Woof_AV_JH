@@ -79,14 +79,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 header.id -> {
 //                    navController.navigate()
                     Log.e("FROM MAIN ACTIVITY:+++", "header CLICKED!!! :))))))")
-                    changeFragment(ProfileFragment())
+                    this.toProfileFragment()
                     onBackPressed()
                 }
             }
         }
     }
 
-    fun changeFragment (fragment: Fragment){
+    fun toProfileFragment (){
         //check current fragment, alter action based on that
         //
         //this.navController.navigate(R.id.action_nav_swipe_half_to_nav_profile)
