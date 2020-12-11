@@ -16,7 +16,7 @@ object SharedPreferencesManager {
 
     val EMAIL = "KEY_EMAIL"
     val PASSWORD = "KEY_PASSWORD"
-    val LOCATION = "KEY_LOCATION"
+//    val LOCATION = "KEY_LOCATION"
 
     fun init(context: Context) {
         if (sharedPreferences == null) {
@@ -31,23 +31,23 @@ object SharedPreferencesManager {
         }
     }
 
-    fun read(key: String?, defaultValue: String?): String? {
+    fun read(key: String?, defaultValue: String?): String?{
         with(sharedPreferences) {
-            if (this!!.contains(key)) {
-                return sharedPreferences!!.getString(key, defaultValue)
+            if (this!!.contains(key)){
+                return sharedPreferences!!.getString(key,defaultValue)
             }
         }
         return defaultValue
     }
 
-    fun removeAll(key: String?) {
-        with(sharedPreferences!!.edit()) {
-            if (sharedPreferences == null && sharedPreferences!!.contains(key)) {
-                remove(EMAIL)
-                remove(PASSWORD)
-
-                apply()
-            }
-        }
-    }
+//    fun removeAll(key: String?) {
+//        with(sharedPreferences!!.edit()) {
+//            if (sharedPreferences == null && sharedPreferences!!.contains(key)) {
+//                remove(EMAIL)
+//                remove(PASSWORD)
+//
+//                apply()
+//            }
+//        }
+//    }
 }
