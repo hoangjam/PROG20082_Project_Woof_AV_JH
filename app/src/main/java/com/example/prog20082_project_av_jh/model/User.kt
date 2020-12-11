@@ -1,6 +1,8 @@
 package com.example.prog20082_project_av_jh.model
 
+import android.location.Location
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.TypeConverters
 import com.example.prog20082_project_av_jh.database.Converters
@@ -28,8 +30,8 @@ data class User(
         @ColumnInfo(name = "dog_id") var dogId: Int,
         @ColumnInfo(name = "dog_size") var dogSize: String?,
         @ColumnInfo(name = "liked_list") var likedList: ArrayList<Int>?,
-        @ColumnInfo(name = "matched_list") var matchedList: ArrayList<Int>?
-
+        @ColumnInfo(name = "matched_list") var matchedList: ArrayList<Int>?,
+        @ColumnInfo(name = "last_location") var lastLocation: String?
 ){
     constructor() : this(
             "",
@@ -44,6 +46,7 @@ data class User(
             0,
             "",
             arrayListOf<Int>(),
-            arrayListOf<Int>()
+            arrayListOf<Int>(),
+            ""
     )
 }
