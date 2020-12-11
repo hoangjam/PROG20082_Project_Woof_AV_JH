@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.prog20082_project_av_jh.R
+import com.example.prog20082_project_av_jh.preferences.SharedPreferencesManager
 import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.activity_landing.*
 
@@ -22,10 +23,17 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener {
         btnSignIn.setOnClickListener(this)
         btnSignUp.setOnClickListener(this)
 
-        userViewModel = UserViewModel(this.application)
+        SharedPreferencesManager.init(applicationContext)
+        this.savePreferences()
 
+        userViewModel = UserViewModel(this.application)
         this.fetchAllUsers()
         
+    }
+
+    private fun savePreferences(){
+        SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, edtEmail.text.toString())
+        SharedPreferencesManager.write(SharedPreferencesManager.PASSWORD, edtEmail.text.toString())
     }
 
     override fun onClick(v: View?) {

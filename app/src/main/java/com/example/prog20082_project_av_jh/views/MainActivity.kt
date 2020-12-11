@@ -79,7 +79,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 header.id -> {
 //                    navController.navigate()
                     Log.e("FROM MAIN ACTIVITY:+++", "header CLICKED!!! :))))))")
-                    this.toProfileFragment()
+//                    changeFragment(ProfileFragment())
+                    navController.navigate(R.id.nav_profile)
                     onBackPressed()
                 }
             }
