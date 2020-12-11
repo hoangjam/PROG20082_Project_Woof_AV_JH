@@ -29,7 +29,6 @@ data class User(
         @ColumnInfo(name = "dog_size") var dogSize: String?,
         @ColumnInfo(name = "liked_list") var likedList: ArrayList<Int>?,
         @ColumnInfo(name = "matched_list") var matchedList: ArrayList<Int>?
-
 ){
     constructor() : this(
             "",
