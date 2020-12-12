@@ -27,7 +27,7 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var location: Location
     private lateinit var currentLocation: LatLng
     private var map: GoogleMap? = null
-    private val DEFAULT_ZOOM: Float = 20F
+    private val DEFAULT_ZOOM: Float = 5F
     private lateinit var locationCallback: LocationCallback
 
     private var lat: Double = 0.0
@@ -46,18 +46,10 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         if(currentUserEmail != null) {
             Log.e(TAG, "Inside current email check")
-
-            /* need to check by other user's ID or something, and observe that way
-            userViewModel.getUserByEmail(currentUserEmail!!)?.observe(this, { matchedUser ->
-                if (matchedUser != null) {
-                    Log.e(TAG, "Inside matched user")
-                    this.existingUser = matchedUser
-                    lat = matchedUser.lat!!
-                    lng = matchedUser.lng!!
-                }
-            })*/
         }
-        this.currentLocation = LatLng(lat, lng)
+
+        // hardcoded for now.
+        this.currentLocation = LatLng(49.753, -98.535)
 
 
         if (LocationManager.locationPermissionsGranted) {
@@ -73,7 +65,6 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 locationResult ?: return
 
                 for(location in locationResult.locations){
-//                    currentLocation = LatLng(lat, lng)
                     lat = location.latitude
                     lng = location.longitude
                     currentLocation = LatLng(lat, lng)
@@ -97,7 +88,6 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         this.locationManager.getLastLocation()?.observe(this, { loc: Location? ->
             if (loc != null) {
-//                this.location = loc
                 this.currentLocation = LatLng(lat, lng)
                 println(this.currentLocation.toString())
                 this.addMarkerOnMap(this.currentLocation)
