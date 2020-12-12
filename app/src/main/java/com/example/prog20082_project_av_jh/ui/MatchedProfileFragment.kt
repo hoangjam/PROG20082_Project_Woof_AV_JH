@@ -8,12 +8,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.example.prog20082_project_av_jh.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_matched_profile.view.*
 import com.example.prog20082_project_av_jh.locationservices.LocationManager
+import com.example.prog20082_project_av_jh.model.User
+import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import com.example.prog20082_project_av_jh.views.DisplayMapActivity
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -40,8 +43,20 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
     private var param2: String? = null
 
     lateinit var fabToMap : FloatingActionButton
-    private val TAG = this.toString()
-    private lateinit var matchedEmail: String
+    private val TAG = this@MatchedProfileFragment.toString()
+    private var matchedEmail = ""
+    private lateinit var matchedUser: User
+    private lateinit var userViewModel: UserViewModel
+
+    private lateinit var tvDogName: TextView
+    private lateinit var tvDogAge: TextView
+    private lateinit var tvDogBreed: TextView
+    private lateinit var tvDogSize: TextView
+    private lateinit var tvDogGender: TextView
+    private lateinit var tvBio: TextView
+    private lateinit var tvOwnerName: TextView
+
+    private lateinit var matchedEmailHolder: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,12 +65,6 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
             param2 = it.getString(ARG_PARAM2)
         }
 
-        var bundle = this.arguments
-
-        if (bundle != null) {
-            matchedEmail = bundle.get("matchedEmail").toString()
-            Toast.makeText(context, matchedEmail, Toast.LENGTH_SHORT).show()
-        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -63,11 +72,66 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_matched_profile, container, false)
 
+        matchedEmailHolder = view.hiddenEmail
+
+        var bundle = this.arguments
+
+        if (bundle != null) {
+            this.matchedEmail = bundle.get("matchedEmail").toString()
+            matchedEmailHolder.setText(this.matchedEmail)
+            Toast.makeText(this.requireContext(), this.matchedEmail, Toast.LENGTH_SHORT).show()
+        } else {
+            Log.e(TAG, "bundle not recieved...")
+        }
+
+        tvDogName = view.tvDogName
+        tvDogAge = view.tvDogAge
+        tvDogBreed = view.tvBreed
+        tvDogSize = view.tvDogSize
+        tvDogGender = view.tvDogGender
+        tvBio = view.tvBio
+        tvOwnerName = view.tvOwnerName
+
+        userViewModel = UserViewModel(requireActivity().application)
+
+        if (!matchedEmail.isNullOrEmpty()) {
+            this.getMatchedUser()
+        }
+
+        //Log.e(TAG, matchedUser.toString())
+
+
+
         fabToMap = view.fabLocation
         fabToMap.setOnClickListener(this)
 
         return view
     }
+
+    private fun getMatchedUser() {
+        this.userViewModel.allUsers.observe(viewLifecycleOwner, {users ->
+            if (users != null) {
+                for (user in users) {
+                    if (user != null && user.email.equals(this.matchedEmail)) {
+                        matchedUser = user
+                        populateProfile(user)
+                    }
+                }
+            }
+
+        })
+    }
+
+    private fun populateProfile(mUser: User) {
+        tvDogName.setText(mUser.dName)
+        tvDogAge.setText(mUser.age.toString())
+        tvDogGender.setText(mUser.gender)
+        tvDogBreed.setText(mUser.breed)
+        tvDogSize.setText(mUser.dogSize.toString())
+        tvBio.setText(mUser.bio)
+        tvOwnerName.setText(mUser.oName)
+    }
+
 
     override fun onClick(v: View?) {
         if (v != null){

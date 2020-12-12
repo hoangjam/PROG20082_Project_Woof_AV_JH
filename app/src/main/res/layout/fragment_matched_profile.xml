@@ -6,6 +6,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HalfSwipeFragment">
 
+    <TextView
+        android:id="@+id/hiddenEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="email..."
+        android:visibility="invisible"/>
+
     <!--src is temporary until we can get database working-->
     <ImageView
         android:id="@+id/imgProfilePic"
