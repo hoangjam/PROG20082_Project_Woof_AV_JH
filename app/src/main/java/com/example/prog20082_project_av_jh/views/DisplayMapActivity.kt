@@ -49,8 +49,7 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         // hardcoded for now.
-        this.currentLocation = LatLng(49.753, -98.535)
-
+        this.currentLocation = LatLng(149.753, -928.535)
 
         if (LocationManager.locationPermissionsGranted) {
             this.getLastLocation()
@@ -98,9 +97,9 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun addMarkerOnMap(location: LatLng) {
         if (this.map != null) {
             this.map!!.addMarker(
-                MarkerOptions().position(location).title("DOG HERE")
+                MarkerOptions().position(location).title("OTHER DOGE HERE")
             )
-            this.map!!.animateCamera(CameraUpdateFactory.newLatLngZoom(location, DEFAULT_ZOOM))
+            this.map!!.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, DEFAULT_ZOOM))
         }
     }
 
@@ -117,14 +116,16 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
         this.getLastLocation()
 
         if(googleMap != null){
-            googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+            googleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
             googleMap.uiSettings.isZoomControlsEnabled = true
             googleMap.uiSettings.isMyLocationButtonEnabled = true
             googleMap.uiSettings.isScrollGesturesEnabled = true
 
             googleMap.addMarker(
-                MarkerOptions().position(this.currentLocation).title("Dog is here")
+                MarkerOptions().position(this.currentLocation).title("YOU DOGE HERE")
             )
+
+            this.map = googleMap
         }
 
         // arbitrarily move the camera to a matched dog position?
