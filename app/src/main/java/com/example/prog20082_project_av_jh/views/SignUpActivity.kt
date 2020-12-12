@@ -1,6 +1,5 @@
 package com.example.prog20082_project_av_jh.views
 
-import android.content.Context
 import android.content.Intent
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
@@ -16,9 +15,7 @@ import com.example.prog20082_project_av_jh.preferences.SharedPreferencesManager
 import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.activity_landing.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.activity_sign_up.btnSignUp
 import kotlinx.android.synthetic.main.activity_sign_up.edtEmail
@@ -97,7 +94,6 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-
     fun saveUserToDB(){
         try{
             var userViewModel = UserViewModel(this.application)
@@ -106,6 +102,13 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             Log.e(TAG, ex.toString())
             Log.e(TAG, ex.localizedMessage)
         }
+    }
+    private fun savePreferences(){
+        SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, edtEmail.text.toString())
+
+        Log.e("SHARED PREFERENCES MANAGER", SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "").toString())
+
+        SharedPreferencesManager.write(SharedPreferencesManager.PASSWORD, edtPassword.text.toString())
     }
 
     private fun savePreferences(){
