@@ -1,15 +1,21 @@
 package com.example.prog20082_project_av_jh.ui
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import com.example.prog20082_project_av_jh.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -55,8 +61,11 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var tvDogGender: TextView
     private lateinit var tvBio: TextView
     private lateinit var tvOwnerName: TextView
+    private lateinit var btnCall: Button
 
-    private lateinit var matchedEmailHolder: TextView
+    private lateinit var matchedPhoneHolder: TextView
+
+    val REQUEST_CALL = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,14 +81,14 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_matched_profile, container, false)
 
-        matchedEmailHolder = view.hiddenEmail
+        matchedPhoneHolder = view.hiddenEmail
 
         var bundle = this.arguments
 
         if (bundle != null) {
             this.matchedEmail = bundle.get("matchedEmail").toString()
-            matchedEmailHolder.setText(this.matchedEmail)
-            Toast.makeText(this.requireContext(), this.matchedEmail, Toast.LENGTH_SHORT).show()
+            matchedPhoneHolder.setText(this.matchedEmail)
+//            Toast.makeText(this.requireContext(), this.matchedEmail, Toast.LENGTH_SHORT).show()
         } else {
             Log.e(TAG, "bundle not recieved...")
         }
@@ -91,6 +100,8 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
         tvDogGender = view.tvDogGender
         tvBio = view.tvBio
         tvOwnerName = view.tvOwnerName
+        btnCall = view.btnCall
+        btnCall.setOnClickListener(this)
 
         userViewModel = UserViewModel(requireActivity().application)
 
@@ -130,8 +141,8 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
         tvDogSize.setText(mUser.dogSize.toString())
         tvBio.setText(mUser.bio)
         tvOwnerName.setText(mUser.oName)
+        matchedPhoneHolder.setText(mUser.phoneNumber)
     }
-
 
     override fun onClick(v: View?) {
         if (v != null){
@@ -141,8 +152,38 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
                     val intent = Intent(activity, DisplayMapActivity::class.java)
                     startActivity(intent)
                 }
+                btnCall.id -> {
+                    this.makeCall()
+                }
             }
         }
+    }
+
+    private fun makeCall() {
+
+        val phoneNumber = matchedPhoneHolder.text.toString()
+        val callIntent = Intent(Intent.ACTION_CALL).apply {
+            data = Uri.parse("tel:" + phoneNumber)
+        }
+
+        if (checkPermission()) {
+            if (callIntent.resolveActivity(this.requireActivity().packageManager) != null) {
+                startActivity(callIntent)
+            }
+        } else {
+            this.requestPermission()
+        }
+
+    }
+
+    private fun checkPermission() : Boolean {
+        return (ContextCompat.checkSelfPermission(this.requireContext().applicationContext, Manifest.permission.CALL_PHONE)
+                == PackageManager.PERMISSION_GRANTED)
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(this.requireActivity(), arrayOf(Manifest.permission.CALL_PHONE), REQUEST_CALL)
+        this.makeCall()
     }
 
     companion object {
