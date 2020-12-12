@@ -56,7 +56,6 @@ class LocationManager(var context: Context) {
                     .addOnSuccessListener {loc: Location? ->
                         if (loc != null){
                             location.value = loc
-
                             Log.e(TAG, "Last Location : " + location.value.toString())
                         }
                     }

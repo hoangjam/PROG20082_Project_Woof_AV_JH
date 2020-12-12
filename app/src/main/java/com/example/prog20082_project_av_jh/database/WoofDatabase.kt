@@ -13,7 +13,7 @@ Name: Jameson Hoang
 Student ID: 991548515
 Date: 2020-11-25
 */
-@Database(entities = arrayOf(User::class), version = 5)
+@Database(entities = arrayOf(User::class), version = 7)
 @TypeConverters(Converters::class)
 abstract class WoofDatabase : RoomDatabase() {
 

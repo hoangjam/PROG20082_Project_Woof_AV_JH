@@ -1,5 +1,6 @@
 package com.example.prog20082_project_av_jh.database
 
+import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.prog20082_project_av_jh.model.User
