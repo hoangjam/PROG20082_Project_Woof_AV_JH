@@ -3,9 +3,13 @@ package com.example.prog20082_project_av_jh.views
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.prog20082_project_av_jh.R
 import com.example.prog20082_project_av_jh.locationservices.LocationManager
+import com.example.prog20082_project_av_jh.model.User
+import com.example.prog20082_project_av_jh.preferences.SharedPreferencesManager
 import com.example.prog20082_project_av_jh.ui.MatchedProfileFragment
+import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 
@@ -26,12 +30,35 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private val DEFAULT_ZOOM: Float = 20F
     private lateinit var locationCallback: LocationCallback
 
+    private var lat: Double = 0.0
+    private var lng: Double = 0.0
+
+    lateinit var userViewModel: UserViewModel
+    lateinit var existingUser: User
+    var currentUserEmail = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_map)
 
         this.locationManager = LocationManager(this@DisplayMapActivity)
-        this.currentLocation = LatLng(0.0, 0.0)
+        userViewModel = UserViewModel(this.application)
+
+        if(currentUserEmail != null) {
+            Log.e(TAG, "Inside current email check")
+
+            /* need to check by other user's ID or something, and observe that way
+            userViewModel.getUserByEmail(currentUserEmail!!)?.observe(this, { matchedUser ->
+                if (matchedUser != null) {
+                    Log.e(TAG, "Inside matched user")
+                    this.existingUser = matchedUser
+                    lat = matchedUser.lat!!
+                    lng = matchedUser.lng!!
+                }
+            })*/
+        }
+        this.currentLocation = LatLng(lat, lng)
+
 
         if (LocationManager.locationPermissionsGranted) {
             this.getLastLocation()
@@ -46,7 +73,10 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 locationResult ?: return
 
                 for(location in locationResult.locations){
-                    currentLocation = LatLng(location.latitude, location.longitude)
+//                    currentLocation = LatLng(lat, lng)
+                    lat = location.latitude
+                    lng = location.longitude
+                    currentLocation = LatLng(lat, lng)
                     addMarkerOnMap(currentLocation)
                 }
             }
@@ -63,13 +93,12 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
         locationManager.fusedLocationProviderClient?.removeLocationUpdates(locationCallback)
     }
 
-
-
     private fun getLastLocation() {
+
         this.locationManager.getLastLocation()?.observe(this, { loc: Location? ->
             if (loc != null) {
-                this.location = loc
-                this.currentLocation = LatLng(location.latitude, location.longitude)
+//                this.location = loc
+                this.currentLocation = LatLng(lat, lng)
                 println(this.currentLocation.toString())
                 this.addMarkerOnMap(this.currentLocation)
             }
