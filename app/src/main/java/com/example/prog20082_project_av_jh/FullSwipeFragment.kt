@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
@@ -177,7 +178,7 @@ class FullSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
                 //after finished, change data, then animate in.
 
                 if (liked) {
-                    this@FullSwipeFragment.likeProfile()
+                    this@FullSwipeFragment.likeProfile(dogIdHolder.text.toString(), currentUser.dogId)
                 } else {
                     this@FullSwipeFragment.dislikeProfile()
                 }
@@ -249,8 +250,60 @@ class FullSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
         })
     }
 
-    private fun likeProfile() {
-        Log.e(TAG, "+++++++++++++ Profile Liked +++++++++")
+    private fun likeProfile(likedDogId: String, currentDogId: String) {
+        Log.e(TAG, "+++++++++++++++ LIKED ++++++++++++++++")
+        if (likedDogId.equals("unset")) {
+            Log.e(TAG, "dogIdHolder not set.... why?")
+        } else {
+            currentUser.likedList?.add(likedDogId)
+            mainActivity.userViewModel.updateUser(this.currentUser)
+            Log.e(TAG, "Added to current dogs likes <3<3<3<3<3<3<3<3 ")
+
+            //check if currently logged in user is on the liked dog's liked list
+            //add to liked list of current dog and, if on other dogs liked list, add to matches on both dogs as well
+            mainActivity.userViewModel.getUserByDogId(likedDogId)?.observe(this.requireActivity(), {matchedUser ->
+                if (matchedUser != null) {
+                    if (matchedUser.likedList != null) {
+
+                        if (matchedUser.likedList!!.contains(currentDogId)) {
+                            Log.e("WITHIN CONTAINS: ", "liked dog likes you back")
+                            if(matchedUser.matchedList != null && currentUser.matchedList != null && matchedUser.dislikedList != null && currentUser.dislikedList != null) {
+                                //duplicates can happen so make sure matchedList doesn't already contain currentdogid
+                                //also not sure why the fact that theyre in the list needs to be checked again here but it does or else it performs wrong
+                                if (!matchedUser.matchedList!!.contains(currentDogId)
+                                    && matchedUser.likedList!!.contains(currentDogId)
+                                    && !matchedUser.dislikedList!!.contains(currentDogId)) {
+                                    matchedUser.matchedList!!.add(currentDogId)
+                                    mainActivity.userViewModel.updateUser(matchedUser)
+                                    this@FullSwipeFragment.notifyOfMatch(matchedUser.dName)
+                                }
+                                if (!currentUser.matchedList!!.contains(likedDogId)
+                                    && currentUser.likedList!!.contains(likedDogId)
+                                    && !matchedUser.dislikedList!!.contains(likedDogId)) {
+                                    currentUser.matchedList!!.add(likedDogId)
+                                    mainActivity.userViewModel.updateUser(currentUser)
+
+                                }
+                                Log.e(TAG, currentUser.toString())
+                                Log.e(TAG, matchedUser.toString())
+                            } else {
+                                Log.e(TAG, "one or both matched lists are null")
+                            }
+                        } else {
+                            Log.e(TAG, "Liked dog doesnt like back")
+                        }
+
+                    } else {
+                        Log.e(TAG, "matcheduser null in likeprofile")
+                    }
+                } else {
+                    Log.e(TAG, "user not found by dog id in likeprofile")
+                }
+            })
+
+            //update database
+            mainActivity.userViewModel.updateUser(this.currentUser)
+        }
     }
 
     private fun dislikeProfile() {
@@ -275,6 +328,25 @@ class FullSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
         fabDislike.setVisibility(View.GONE)
         fabLike.setVisibility(View.GONE)
         fadeViewIn(tvEndOfLine)
+    }
+
+    private fun notifyOfMatch(dogName: String) {
+        val alertBuilder = AlertDialog.Builder(this.requireContext())
+        alertBuilder.setTitle("New Match!")
+        alertBuilder.setMessage("You and ${dogName} matched! Go to your matches to see more!")
+        alertBuilder.setPositiveButton("See matches") { dialog, which ->
+            //set action to matches fragment
+
+            Navigation.findNavController(requireView()).navigate(R.id.action_nav_swipe_full_to_nav_matches)
+
+//            Toast.makeText(this.requireContext(), "Going to matches fragment.", Toast.LENGTH_SHORT).show()
+        }
+
+        alertBuilder.setNegativeButton("Later") {dialog, which ->
+            //do nothing
+        }
+
+        alertBuilder.show()
     }
 
 }
