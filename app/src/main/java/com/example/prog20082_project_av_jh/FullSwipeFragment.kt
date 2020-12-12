@@ -9,12 +9,16 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.example.prog20082_project_av_jh.model.User
+import com.example.prog20082_project_av_jh.utils.CheckViewable
+import com.example.prog20082_project_av_jh.views.MainActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.swipe_full_fragment.view.*
@@ -25,7 +29,7 @@ import kotlinx.android.synthetic.main.swipe_full_fragment.view.*
    --
 */
 
-class FullSwipeFragment : Fragment(), View.OnClickListener {
+class FullSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
 
     private lateinit var viewModel: SwipeViewModel
 
@@ -37,6 +41,15 @@ class FullSwipeFragment : Fragment(), View.OnClickListener {
     private lateinit var fabLike: FloatingActionButton
     private lateinit var fabDislike: FloatingActionButton
     private lateinit var tvDogName: TextView
+    private lateinit var tvDogAge: TextView
+    private lateinit var tvDogGender: TextView
+    private lateinit var tvDogSize: TextView
+    private lateinit var tvDogBreed: TextView
+    private lateinit var tvDogBio: TextView
+
+    private lateinit var mainActivity: MainActivity
+    private lateinit var tvEndOfLine: TextView
+    private lateinit var currentUser: User
 
     private val TAG =  this@FullSwipeFragment.toString()
 
@@ -62,8 +75,38 @@ class FullSwipeFragment : Fragment(), View.OnClickListener {
         fabLike.setOnClickListener(this)
 
         tvDogName = root.tvDogName
+        tvDogAge = root.tvDogAge
+        tvDogGender = root.tvDogGender
+        tvDogSize = root.tvDogSize
+        tvDogBreed = root.tvBreed
+        tvDogBio = root.tvBio
 
         swipeView = root.profile_info
+
+        tvEndOfLine = root.tvEndOfLine
+
+        mainActivity = activity as MainActivity
+
+        mainActivity.userViewModel.getUserByEmail(mainActivity.currUserEmail!!)?.observe(this.requireActivity(), {matchedUser ->
+
+            if (matchedUser != null) {
+                this.currentUser = matchedUser
+
+                Log.e("Profile Fragment", "Matched user : " + matchedUser.toString())
+            }
+        })
+
+
+        if (!mainActivity.swipeEOL) {
+            //only call if visiblity toggled as EOL but more results have been added (EOL will have changed from halfswipe fragment previous to this)
+            if (tvEndOfLine.visibility == View.VISIBLE) {
+                tvEndOfLine.visibility = View.INVISIBLE
+                swipeView.visibility = View.VISIBLE
+                fabLike.visibility = View.VISIBLE
+                fabDislike.visibility = View.VISIBLE
+            }
+            this.changeInfo()
+        }
 
         return root
     }
@@ -128,9 +171,14 @@ class FullSwipeFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onAnimationEnd(animation: Animation?) {
+                mainActivity.index ++
                 //after finished, change data, then animate in.
                 this@FullSwipeFragment.changeInfo()
-                this@FullSwipeFragment.fadeViewIn()
+
+                //as long as theres another card, slide it in again
+                if (!mainActivity.swipeEOL) {
+                    this@FullSwipeFragment.fadeViewIn(swipeView)
+                }
             }
 
             override fun onAnimationRepeat(animation: Animation?) {
@@ -142,17 +190,61 @@ class FullSwipeFragment : Fragment(), View.OnClickListener {
 
     }
 
-    private fun fadeViewIn() {
+    private fun fadeViewIn(view: View) {
         var anim = AnimationUtils.loadAnimation(this.requireContext(), R.anim.fade_in)
-        swipeView.startAnimation(anim)
+        view.startAnimation(anim)
     }
 
     private fun changeInfo() {
-        tvDogName.setText("Fifi")
+        Log.e(TAG, "CHANGING INFO -.......... ")
+
+        mainActivity.userViewModel.allUsers.observe(viewLifecycleOwner, {users ->
+
+            if (mainActivity.index >= users.size) {
+                Log.e(TAG, "index: ${mainActivity.index}, size: ${users.size}")
+                mainActivity.swipeEOL = true;
+                this.noMoreDogs()
+            } else {
+
+                try {
+                    if (users[mainActivity.index] != null) {
+                        //if user is not viewable, then try again with the next user
+                        if (isViewable(users[mainActivity.index], currentUser)) {
+                            tvDogName.setText(users[mainActivity.index].dName)
+                            tvDogAge.setText(users[mainActivity.index].age.toString() + " yrs")
+                            tvDogGender.setText(users[mainActivity.index].gender)
+                            tvDogBreed.setText(users[mainActivity.index].breed)
+                            if (users[mainActivity.index].dogSize.equals("")) {
+                                tvDogSize.setText("?")
+                            } else {
+                                tvDogSize.setText(users[mainActivity.index].dogSize + " lbs")
+                            }
+                        } else {
+                            mainActivity.index += 1
+                            changeInfo()
+                        }
+
+                    }
+                } catch (ex: IndexOutOfBoundsException) {
+                    mainActivity.swipeEOL = true
+                    this.noMoreDogs()
+                }
+            }
+
+        })
     }
 
     private fun likeProfile() {
         Log.e(TAG, "+++++++++++++ Profile Liked +++++++++")
+    }
+
+    private fun noMoreDogs() {
+        Toast.makeText(this.requireActivity(), "Last dog reached!", Toast.LENGTH_SHORT).show()
+        swipeView.setVisibility(View.GONE)
+        tvEndOfLine.setVisibility(View.VISIBLE)
+        fabDislike.setVisibility(View.GONE)
+        fabLike.setVisibility(View.GONE)
+        fadeViewIn(tvEndOfLine)
     }
 
 }

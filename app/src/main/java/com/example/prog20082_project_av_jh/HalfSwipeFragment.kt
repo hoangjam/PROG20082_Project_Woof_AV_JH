@@ -68,29 +68,25 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
         //get main activity for access to public fields and functions
         mainActivity = activity as MainActivity
 
-        //get index of currently showing user to continue iterating through at same spot
-//        currentIndex = mainActivity.userList.indexOf(mainActivity.showingProfile)
-//
-        if (mainActivity.currUserEmail != null){
-            mainActivity.userViewModel.getUserByEmail(mainActivity.currUserEmail!!)?.observe(this.requireActivity(), {matchedUser ->
 
-                if (matchedUser != null) {
-                    this.currentUser = matchedUser
+        mainActivity.userViewModel.getUserByEmail(mainActivity.currUserEmail!!)?.observe(this.requireActivity(), {matchedUser ->
 
-                    Log.d("Profile Fragment", "Matched user : " + matchedUser.toString())
-                }
-            })
-        }
-        Log.e(TAG, "CREATE CALLED")
+            if (matchedUser != null) {
+                this.currentUser = matchedUser
+
+                Log.e("Profile Fragment", "Matched user : " + matchedUser.toString())
+            }
+        })
 
         //only call if we're resuming this view after reaching EOL and need to check if more results have entered database
         if (mainActivity.swipeEOL) {
             Log.e(TAG, "RESUMED AND EOL")
-            mainActivity.index = 0
-            //check if there is another user available, if so, display it.
+            //check if there is another user available, if so, display it. else, make sure that display is at noMoreDogs.
             mainActivity.userViewModel.allUsers.observe(viewLifecycleOwner, {users ->
                 if (mainActivity.index < users.size) {
                     moreDogs()
+                } else {
+                    noMoreDogs()
                 }
             })
         } else {

@@ -124,22 +124,26 @@
         android:id="@+id/fabLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:backgroundTint="@android:color/holo_green_light"
+        android:layout_margin="20dp"
         android:clickable="true"
-        android:src="@android:drawable/btn_star"
+        android:backgroundTint="@android:color/holo_green_light"
         app:backgroundTint="#8BC34A"
+        android:src="@android:drawable/btn_star"
+        app:layout_constraintStart_toEndOf="@id/fabDislike"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="fitCenter"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabDislike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_margin="20dp"
         android:clickable="true"
         android:backgroundTint="@color/bittersweet"
         android:src="@android:drawable/ic_delete"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@id/fabLike"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:scaleType="fitCenter"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

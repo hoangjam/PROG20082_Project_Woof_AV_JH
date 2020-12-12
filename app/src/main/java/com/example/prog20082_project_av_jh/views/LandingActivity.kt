@@ -32,7 +32,10 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun savePreferences(){
         SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, edtEmail.text.toString())
-        SharedPreferencesManager.write(SharedPreferencesManager.PASSWORD, edtEmail.text.toString())
+
+        Log.e("SHARED PREFERENCES MANAGER", SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "").toString())
+
+        SharedPreferencesManager.write(SharedPreferencesManager.PASSWORD, edtPassword.text.toString())
     }
 
     override fun onClick(v: View?) {
