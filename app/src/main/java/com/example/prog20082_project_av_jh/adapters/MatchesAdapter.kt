@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.prog20082_project_av_jh.R
@@ -20,7 +21,8 @@ import kotlinx.android.synthetic.main.match_fragment.view.*
 
 class MatchesAdapter (
     val context: Context,
-    val matchesList: MutableList<String>
+    val matchesList: MutableList<User>,
+    val itemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<MatchesAdapter.MatchViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -34,7 +36,7 @@ class MatchesAdapter (
     }
 
     override fun onBindViewHolder(holder: MatchesAdapter.MatchViewHolder, position: Int) {
-        holder.bind(matchesList[position])
+        holder.bind(matchesList[position], itemClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -46,9 +48,18 @@ class MatchesAdapter (
 
         var tvMatchHeader: TextView = itemView.tvMatchHeader
 
-        fun bind(match: String) {
-            tvMatchHeader.setText("You and ${match} matched!")
+        fun bind(match: User, clickListener: OnItemClickListener) {
+            tvMatchHeader.setText("You and ${match.dName} matched!")
+
+            itemView.setOnClickListener{
+                clickListener.onItemClicked(match)
+            }
+
         }
 
     }
+}
+
+interface OnItemClickListener {
+    fun onItemClicked(match: User)
 }

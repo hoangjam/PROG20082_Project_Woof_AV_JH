@@ -9,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.prog20082_project_av_jh.adapters.MatchesAdapter
+import com.example.prog20082_project_av_jh.adapters.OnItemClickListener
 import com.example.prog20082_project_av_jh.model.User
 import com.example.prog20082_project_av_jh.views.MainActivity
 import kotlinx.android.synthetic.main.matches_list_fragment.view.*
@@ -20,18 +22,17 @@ import kotlinx.android.synthetic.main.matches_list_fragment.view.*
 /**
  * A fragment representing a list of Items.
  */
-class MatchesFragment : Fragment(), View.OnClickListener {
+class MatchesFragment : Fragment(), OnItemClickListener {
 
     private var columnCount = 1
 
     private lateinit var rvMatches: RecyclerView
     private lateinit var matchesAdapter: MatchesAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var matchesList: MutableList<String>
+    private lateinit var matchesList: MutableList<User>
     private lateinit var mainActivity: MainActivity
     private lateinit var currentUser: User
 
-    private lateinit var dogIdList: MutableList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +61,7 @@ class MatchesFragment : Fragment(), View.OnClickListener {
         this.rvMatches = view.findViewById(R.id.rvMatches)
         this.matchesList = mutableListOf()
         //this.populateMatchesList()
-        this.matchesAdapter = MatchesAdapter(this.requireContext(), matchesList)
+        this.matchesAdapter = MatchesAdapter(this.requireContext(), matchesList, this)
         this.rvMatches.adapter = this.matchesAdapter
         this.viewManager = LinearLayoutManager(this.requireContext())
         this.rvMatches.layoutManager = this.viewManager
@@ -76,7 +77,7 @@ class MatchesFragment : Fragment(), View.OnClickListener {
         mainActivity.userViewModel.allUsers
         this.populateMatchesList()
 
-        this.matchesAdapter = MatchesAdapter(this.requireContext(), matchesList)
+        this.matchesAdapter = MatchesAdapter(this.requireContext(), matchesList, this)
         this.rvMatches.adapter = this.matchesAdapter
     }
 
@@ -90,20 +91,20 @@ class MatchesFragment : Fragment(), View.OnClickListener {
                 Log.e("populateMatchesList()", "dog id called: ${dogId}")
 //                this.addDogNameFromDogId(dogId)
 //                matchesList.add(this.dogNameFromId(dogId))
-                this.dogNameFromId(dogId)
+                this.addDogFromId(dogId)
             }
         }
 
         Log.d("populateMatchesList: " , matchesList.toString())
     }
 
-    private fun dogNameFromId(dogId: String){
+    private fun addDogFromId(dogId: String){
 
         mainActivity.userViewModel.allUsers.observe(viewLifecycleOwner, {users ->
 
             for (user in users) {
                 if (user.dogId.equals(dogId)){
-                    matchesList.add(user.dName)
+                    matchesList.add(user)
                 }
             }
 
@@ -133,8 +134,8 @@ class MatchesFragment : Fragment(), View.OnClickListener {
             }
     }
 
-    override fun onClick(v: View?) {
-        TODO("Not yet implemented")
+    override fun onItemClicked(match: User) {
+        Toast.makeText(context, "email: " + match.email, Toast.LENGTH_SHORT).show()
     }
 
 }
