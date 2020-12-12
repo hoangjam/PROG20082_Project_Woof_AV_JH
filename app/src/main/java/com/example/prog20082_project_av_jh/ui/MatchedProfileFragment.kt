@@ -41,6 +41,7 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
 
     lateinit var fabToMap : FloatingActionButton
     private val TAG = this.toString()
+    private lateinit var matchedEmail: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +53,7 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
         var bundle = this.arguments
 
         if (bundle != null) {
-            var matchedEmail = bundle.get("matchedEmail").toString()
+            matchedEmail = bundle.get("matchedEmail").toString()
             Toast.makeText(context, matchedEmail, Toast.LENGTH_SHORT).show()
         }
     }
