@@ -22,24 +22,32 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.prog20082_project_av_jh.HalfSwipeFragment
 import com.example.prog20082_project_av_jh.MatchesFragment
 import com.example.prog20082_project_av_jh.R
+import com.example.prog20082_project_av_jh.model.User
+import com.example.prog20082_project_av_jh.preferences.SharedPreferencesManager
 import com.example.prog20082_project_av_jh.ui.profile.ProfileFragment
+import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.swipe_half_fragment.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
+    private val TAG = this@MainActivity.toString()
     private lateinit var appBarConfiguration: AppBarConfiguration
-
     private lateinit var navController: NavController
-
     private lateinit var header: LinearLayout
-
     private lateinit var navHost : NavHostFragment
+    lateinit var userViewModel: UserViewModel
+    //var showingProfile: User? = null
+    var currUserEmail = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
+    var index = 0
+    var swipeEOL = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        userViewModel = UserViewModel(this.application)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -71,7 +79,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         header.setOnClickListener(this)
 
         navHost = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?)!!
+
+        //showingProfile = User()
+
     }
+
 
     override fun onClick(v: View?) {
         if (v != null) {
@@ -85,22 +97,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
-    }
-
-    fun toProfileFragment (){
-        //check current fragment, alter action based on that
-        //
-        //this.navController.navigate(R.id.action_nav_swipe_half_to_nav_profile)
-
-        this.navController.navigate(R.id.nav_profile)
-
-//        val childFragment = navHost.childFragmentManager.getFragment()
-//
-//        if (childFragment is HalfSwipeFragment){
-//
-//        }else if (childFragment is MatchesFragment){
-//
-//        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
