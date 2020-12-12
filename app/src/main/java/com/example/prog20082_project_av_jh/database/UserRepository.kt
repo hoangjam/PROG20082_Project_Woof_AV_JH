@@ -1,5 +1,6 @@
 package com.example.prog20082_project_av_jh.database
 
+import android.location.Location
 import androidx.lifecycle.LiveData
 import com.example.prog20082_project_av_jh.model.User
 
@@ -17,6 +18,7 @@ class UserRepository(
     fun insertAll(user: User){
         userDao.insertAll(user)
     }
+
     fun updateUser(user: User){
         userDao.updateUsers(user)
     }

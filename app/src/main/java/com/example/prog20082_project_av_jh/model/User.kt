@@ -29,12 +29,14 @@ data class User(
         @ColumnInfo(name = "breed") var breed: String?,
         @ColumnInfo(name = "age") var age: Int?,
         @ColumnInfo(name = "bio") var bio: String?,
-        @ColumnInfo(name = "dog_id") var dogId: Int = UUID.randomUUID().toString().toInt(),
+        @ColumnInfo(name = "dog_id") var dogId: String = UUID.randomUUID().toString(),
         @ColumnInfo(name = "dog_size") var dogSize: String?,
         @ColumnInfo(name = "liked_list") var likedList: ArrayList<Int>?,
         @ColumnInfo(name = "matched_list") var matchedList: ArrayList<Int>?,
         @ColumnInfo(name = "disliked_list") var dislikedList: ArrayList<Int>?,
-        @ColumnInfo(name = "last_location") var lastLocation: String?
+        @ColumnInfo(name = "latitude") var lat: Double?,
+        @ColumnInfo(name = "longitude") var lng: Double?
+
 ){
     constructor() : this(
             "",
@@ -46,11 +48,12 @@ data class User(
             "",
             0,
             "",
-            0,
+            "",
             "",
             arrayListOf<Int>(),
             arrayListOf<Int>(),
             arrayListOf<Int>(),
-            ""
+            0.0,
+            0.0
     )
 }
