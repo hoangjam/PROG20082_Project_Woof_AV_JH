@@ -24,7 +24,6 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener {
         btnSignUp.setOnClickListener(this)
 
         SharedPreferencesManager.init(applicationContext)
-        this.savePreferences()
 
         userViewModel = UserViewModel(this.application)
         this.fetchAllUsers()
@@ -57,6 +56,7 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener {
 
         userViewModel.getUserByLoginInfo(email, password)?.observe(this@LandingActivity, {matchedUser ->
             if(matchedUser != null){
+                this.savePreferences()
                 Toast.makeText(this, "Signing in", Toast.LENGTH_SHORT).show()
                 this@LandingActivity.finishAndRemoveTask()
                 this.goToMain()
