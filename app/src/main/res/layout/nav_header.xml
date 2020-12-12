@@ -14,7 +14,7 @@
     android:id="@+id/nav_header">
 
     <ImageButton
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="35dp"
         android:id="@+id/btnProfile"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -31,7 +31,7 @@
 <!--        app:srcCompat="@drawable/dog_icon" />-->
 
     <TextView
-        android:id="@+id/tvDogName"
+        android:id="@+id/tvDogNameHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="0dp"

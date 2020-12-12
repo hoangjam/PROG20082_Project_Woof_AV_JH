@@ -1,5 +1,6 @@
 package com.example.prog20082_project_av_jh.views
 
+import android.content.Context
 import android.content.Intent
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +16,9 @@ import com.example.prog20082_project_av_jh.preferences.SharedPreferencesManager
 import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
-import kotlinx.android.synthetic.main.activity_landing.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.activity_sign_up.btnSignUp
 import kotlinx.android.synthetic.main.activity_sign_up.edtEmail

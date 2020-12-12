@@ -17,16 +17,17 @@ class Converters {
 //    @TypeConverter
 //    fun listStrToJson(value: ArrayList<String>?) = Gson().toJson(value)
 //
-//    @TypeConverter
-//    fun jsonToStrList(value: String): ArrayList<String>? {
-//        val values = Gson().fromJson(value, ArrayList::class.java) as ArrayList<String>
-//        return values
-//    }
 
     @TypeConverter
     fun jsonToList(value: String): ArrayList<String>? {
         val values = Gson().fromJson(value, ArrayList::class.java) as ArrayList<String>
         return values
     }
+
+    //    @TypeConverter
+//    fun jsonToStrList(value: String): ArrayList<String>? {
+//        val values = Gson().fromJson(value, ArrayList::class.java) as ArrayList<String>
+//        return values
+//    }
 
 }

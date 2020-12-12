@@ -136,16 +136,17 @@ class MatchesFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClicked(match: User) {
-        Toast.makeText(context, "email: " + match.email, Toast.LENGTH_SHORT).show()
 
         var bundle = Bundle()
         bundle.putString("matchedEmail", match.email)
 
-        var matchedProfileFragment = MatchedProfileFragment()
+        var matchedProfileFragment = MatchedProfileFragment.newInstance("matchedEmail", match.email)
         matchedProfileFragment.arguments = bundle
 
-        var navController = findNavController()
-        navController.navigate(R.id.action_nav_matches_to_matched_profile)
+//        var navController = findNavController()
+//        navController.navigate(R.id.action_nav_matches_to_matched_profile)
+
+        parentFragmentManager.beginTransaction().replace(R.id.matchesFragment, matchedProfileFragment).commit()
     }
 
 }

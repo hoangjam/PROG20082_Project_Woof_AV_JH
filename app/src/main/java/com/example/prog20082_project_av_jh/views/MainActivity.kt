@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -28,6 +29,7 @@ import com.example.prog20082_project_av_jh.ui.profile.ProfileFragment
 import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_header.view.*
 import kotlinx.android.synthetic.main.swipe_half_fragment.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     var currUserEmail = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
     var index = 0
     var swipeEOL = false
+    lateinit var headerName: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,12 +81,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         header = headerView.findViewById(R.id.nav_header)
         header.setOnClickListener(this)
 
+        headerName = header.findViewById(R.id.tvDogNameHeader)
+
+        getOwnerName()
+
         navHost = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?)!!
 
         //showingProfile = User()
 
     }
 
+    private fun getOwnerName() {
+        if (!this.currUserEmail.isNullOrEmpty()){
+            userViewModel.getUserByEmail(this.currUserEmail!!)?.observe(this, {user ->
+
+                if (user != null) {
+                    headerName.setText(user.oName)
+                }
+
+            })
+        }
+    }
 
     override fun onClick(v: View?) {
         if (v != null) {
