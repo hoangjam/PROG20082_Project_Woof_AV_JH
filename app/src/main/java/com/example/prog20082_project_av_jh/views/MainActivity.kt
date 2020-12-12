@@ -22,7 +22,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.prog20082_project_av_jh.HalfSwipeFragment
 import com.example.prog20082_project_av_jh.MatchesFragment
 import com.example.prog20082_project_av_jh.R
+import com.example.prog20082_project_av_jh.model.User
 import com.example.prog20082_project_av_jh.ui.profile.ProfileFragment
+import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.swipe_half_fragment.*
@@ -37,9 +39,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var navHost : NavHostFragment
 
+    private lateinit var userList: MutableList<User>
+
+    private lateinit var userViewModel: UserViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        userViewModel = UserViewModel(this.application)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -71,6 +79,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         header.setOnClickListener(this)
 
         navHost = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?)!!
+
+        this.getUsers()
+    }
+
+    private fun getUsers() {
+
+        //get users
+
     }
 
     override fun onClick(v: View?) {
