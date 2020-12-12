@@ -11,6 +11,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -144,28 +145,6 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
             mainActivity.userViewModel.getUserByDogId(likedDogId)?.observe(this.requireActivity(), {matchedUser ->
                 if (matchedUser != null) {
                     if (matchedUser.likedList != null) {
-//                        for (likedId in matchedUser.likedList!!) {
-//                            Log.e("Liked dog's like", "(((((((((((" + likedId + ")))))))))))")
-//                            Log.e("Current dog's tag:", "(((((((((((" + currentDogId + ")))))))))))")
-//                            if (likedId.equals(currentDogId)) {
-//                                Log.e(TAG, "Liked dog likes current dog back! %%%%%%%")
-//                                if(matchedUser.matchedList != null && currentUser.matchedList != null) {
-//                                    //since duplicates occasionally happen a check needs to be put in place
-//                                    matchedUser.matchedList!!.add(currentDogId)
-//                                    currentUser.matchedList!!.add(likedDogId)
-//                                    mainActivity.userViewModel.updateUser(matchedUser)
-//                                    mainActivity.userViewModel.updateUser(currentUser)
-//                                    Log.e(TAG, currentUser.toString())
-//                                    Log.e(TAG, matchedUser.toString())
-//                                    break;
-//                                } else {
-//                                    Log.e(TAG, "one or both matched lists are null")
-//                                }
-//                                break;
-//                            } else {
-//                                Log.e(TAG, "Liked dog doesnt like back")
-//                            }
-//                        }
 
                         if (matchedUser.likedList!!.contains(currentDogId)) {
                             Log.e("WITHIN CONTAINS: ", "liked dog likes you back")
@@ -177,12 +156,14 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
                                     && !matchedUser.dislikedList!!.contains(currentDogId)) {
                                     matchedUser.matchedList!!.add(currentDogId)
                                     mainActivity.userViewModel.updateUser(matchedUser)
+                                    this@HalfSwipeFragment.notifyOfMatch(matchedUser.dName)
                                 }
                                 if (!currentUser.matchedList!!.contains(likedDogId)
                                     && currentUser.likedList!!.contains(likedDogId)
                                     && !matchedUser.dislikedList!!.contains(likedDogId)) {
                                     currentUser.matchedList!!.add(likedDogId)
                                     mainActivity.userViewModel.updateUser(currentUser)
+
                                 }
                                     Log.e(TAG, currentUser.toString())
                                     Log.e(TAG, matchedUser.toString())
@@ -333,6 +314,25 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
             }
 
         })
+    }
+
+    private fun notifyOfMatch(dogName: String) {
+        val alertBuilder = AlertDialog.Builder(this.requireContext())
+        alertBuilder.setTitle("New Match!")
+        alertBuilder.setMessage("You and ${dogName} matched! Go to your matches to see more!")
+        alertBuilder.setPositiveButton("See matches") { dialog, which ->
+            //set action to matches fragment
+
+            Navigation.findNavController(requireView()).navigate(R.id.action_nav_swipe_half_to_nav_matches)
+
+//            Toast.makeText(this.requireContext(), "Going to matches fragment.", Toast.LENGTH_SHORT).show()
+        }
+
+        alertBuilder.setNegativeButton("Later") {dialog, which ->
+            //do nothing
+        }
+
+        alertBuilder.show()
     }
 
 }
