@@ -37,17 +37,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var navController: NavController
     private lateinit var header: LinearLayout
     private lateinit var navHost : NavHostFragment
-    private lateinit var userList: MutableList<User>
-    private lateinit var userViewModel: UserViewModel
-    private lateinit var showingProfile: User
+    lateinit var userViewModel: UserViewModel
+    var showingProfile: User? = null
     var currUserEmail = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
+    var index = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         userViewModel = UserViewModel(this.application)
-        userList = mutableListOf()
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -80,37 +79,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         navHost = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?)!!
 
-        this.fetchAllUsers()
-    }
-
-    fun setShowingProfile(curr: User) {
-        this.showingProfile = curr
-    }
-
-    fun getUsers() : MutableList<User> {
-        return this.userList
-    }
-
-    private fun fetchAllUsers() {
-
-        Log.e(TAG, "++++++++++++  FETCHING VIEWABLE USERS.... ++++++++")
-
-        userViewModel.allUsers.observe(this, { users ->
-
-            //add all users to mutable list except the current users, liked users, matched users, and disliked users.
-            //TODO: remove liked users, matched users, and disliked users
-            if (users != null) {
-                for (user in users) {
-                    if (user.email != this.currUserEmail){
-                        userList.add(user)
-                        Log.e(TAG, user.toString())
-                    }
-                }
-            }
-
-        })
+        showingProfile = User()
 
     }
+
 
     override fun onClick(v: View?) {
         if (v != null) {
@@ -124,22 +96,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
-    }
-
-    fun toProfileFragment (){
-        //check current fragment, alter action based on that
-        //
-        //this.navController.navigate(R.id.action_nav_swipe_half_to_nav_profile)
-
-        this.navController.navigate(R.id.nav_profile)
-
-//        val childFragment = navHost.childFragmentManager.getFragment()
-//
-//        if (childFragment is HalfSwipeFragment){
-//
-//        }else if (childFragment is MatchesFragment){
-//
-//        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

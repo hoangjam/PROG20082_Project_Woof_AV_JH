@@ -10,22 +10,34 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.example.prog20082_project_av_jh.model.User
+import com.example.prog20082_project_av_jh.utils.CheckViewable
+import com.example.prog20082_project_av_jh.views.MainActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.swipe_half_fragment.view.*
+import java.text.SimpleDateFormat
 
 
-class HalfSwipeFragment : Fragment(), View.OnClickListener {
+class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
 
     private lateinit var cardView: CardView
     private lateinit var fabLike: FloatingActionButton
     private lateinit var fabDislike: FloatingActionButton
     private lateinit var tvDogName: TextView
+    private lateinit var tvDogAge: TextView
+    private lateinit var tvDogGender: TextView
+    private lateinit var tvDogSize: TextView
+    private lateinit var tvDogBreed: TextView
+    private lateinit var mainActivity: MainActivity
+    private lateinit var currentUser: User
 
     private val TAG =  this@HalfSwipeFragment.toString()
 
@@ -41,10 +53,33 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener {
         fabLike = root.fabLike
         fabDislike = root.fabDislike
         tvDogName = root.tvDogName
+        tvDogAge = root.tvDogAge
+        tvDogSize = root.tvDogSize
+        tvDogGender = root.tvDogGender
+        tvDogBreed= root.tvBreed
 
         cardView.setOnClickListener(this)
         fabLike.setOnClickListener(this)
         fabDislike.setOnClickListener(this)
+
+        //get main activity for access to public fields and functions
+        mainActivity = activity as MainActivity
+
+        //get index of currently showing user to continue iterating through at same spot
+//        currentIndex = mainActivity.userList.indexOf(mainActivity.showingProfile)
+//
+        if (mainActivity.currUserEmail != null){
+            mainActivity.userViewModel.getUserByEmail(mainActivity.currUserEmail!!)?.observe(this.requireActivity(), {matchedUser ->
+
+                if (matchedUser != null) {
+                    this.currentUser = matchedUser
+
+                    Log.d("Profile Fragment", "Matched user : " + matchedUser.toString())
+                }
+            })
+        }
+
+        this.changeInfo()
 
         return root
     }
@@ -116,9 +151,45 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun changeInfo() {
-        tvDogName.setText("Fifi")
+
+        mainActivity.userViewModel.allUsers.observe(viewLifecycleOwner, {users ->
+
+            try {
+                //if user is not viewable, then try again with the next user
+                if (users[mainActivity.index] != null) {
+                    if (isViewable(users[mainActivity.index], currentUser)) {
+                        tvDogName.setText(users[mainActivity.index].dName)
+                        tvDogAge.setText(users[mainActivity.index].age.toString() + " yrs")
+                        tvDogGender.setText(users[mainActivity.index].gender)
+                        tvDogBreed.setText(users[mainActivity.index].breed)
+                        if (users[mainActivity.index].dogSize.equals("")) {
+                            tvDogSize.setText("?")
+                        } else {
+                            tvDogSize.setText(users[mainActivity.index].dogSize + " lbs")
+                        }
+                        mainActivity.index += 1
+                    }  else {
+                        mainActivity.index += 1
+                        changeInfo()
+                    }
+                }
+            } catch (ex: IndexOutOfBoundsException) {
+                Toast.makeText(this.requireActivity(), "Last dog reached", Toast.LENGTH_SHORT)
+            }
+
+        })
+
+
+//        //populate info based on thisuser
+//        tvDogName.setText(mainActivity.showingProfile.dName)
+//        tvDogAge.setText(mainActivity.showingProfile.age.toString())
+//        tvDogGender.setText(mainActivity.showingProfile.gender)
+//        tvDogBreed.setText(mainActivity.showingProfile.breed)
+//        tvDogSize.setText(mainActivity.showingProfile.breed)
+//
+//        //update index, update showing profile
+//        currentIndex++
+//        mainActivity.showingProfile = mainActivity.userList[currentIndex]
     }
-
-
 
 }
