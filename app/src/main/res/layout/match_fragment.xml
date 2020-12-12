@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginBottom="8dp">
 
     <!--src img temporary until can be loaded from db -->
     <ImageView
@@ -11,7 +12,7 @@
         android:layout_height="50dp"
         android:scaleType="centerCrop"
         android:layout_margin="@dimen/text_margin"
-        android:src="@drawable/samara_ball"
+        android:src="@drawable/paw_heart"
         android:layout_gravity="center"/>
 
     <LinearLayout
@@ -20,7 +21,7 @@
         android:orientation="vertical"
         android:padding="16dp">
         <TextView
-            android:id="@+id/tvNotificationHeader"
+            android:id="@+id/tvMatchHeader"
             android:text="You and Samara matched!"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +29,7 @@
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <TextView
-            android:id="@+id/tvNotificationMessage"
+            android:id="@+id/tvMatchMessage"
             android:text="Click here to view their profile and schedule a doggy meetup!"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

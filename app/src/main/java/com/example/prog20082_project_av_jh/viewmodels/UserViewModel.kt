@@ -72,7 +72,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getUserByDogId(dogId: String) : MutableLiveData<User>? {
         getUserByDogIdCoroutine(dogId)
-        Log.d("UserViewModel : ", matchedUser.toString())
+        Log.d("UserViewModel : ", matchedUserFromDogId.toString())
         return matchedUserFromDogId
     }
 }
