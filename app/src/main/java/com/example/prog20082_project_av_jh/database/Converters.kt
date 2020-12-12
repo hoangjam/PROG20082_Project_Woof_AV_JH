@@ -12,7 +12,7 @@ Date: 2020-12-02
 */
 class Converters {
     @TypeConverter
-    fun listToJson(value: ArrayList<Int>?) = Gson().toJson(value)
+    fun listToJson(value: ArrayList<String>?) = Gson().toJson(value)
 
 //    @TypeConverter
 //    fun listStrToJson(value: ArrayList<String>?) = Gson().toJson(value)
@@ -24,8 +24,8 @@ class Converters {
 //    }
 
     @TypeConverter
-    fun jsonToList(value: String): ArrayList<Int>? {
-        val values = Gson().fromJson(value, ArrayList::class.java) as ArrayList<Int>
+    fun jsonToList(value: String): ArrayList<String>? {
+        val values = Gson().fromJson(value, ArrayList::class.java) as ArrayList<String>
         return values
     }
 
