@@ -23,8 +23,10 @@ import com.example.prog20082_project_av_jh.utils.CheckViewable
 import com.example.prog20082_project_av_jh.views.MainActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.swipe_half_fragment.*
 import kotlinx.android.synthetic.main.swipe_half_fragment.view.*
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
@@ -40,6 +42,7 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
     private lateinit var mainActivity: MainActivity
     private lateinit var currentUser: User
     private lateinit var tvEndOfLine: TextView
+    private lateinit var dogIdHolder: TextView
 
     private val TAG =  this@HalfSwipeFragment.toString()
 
@@ -60,6 +63,7 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
         tvDogGender = root.tvDogGender
         tvDogBreed= root.tvBreed
         tvEndOfLine = root.tvEndOfLine
+        dogIdHolder = root.dog_id_holder
 
         cardView.setOnClickListener(this)
         fabLike.setOnClickListener(this)
@@ -112,12 +116,11 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
                     changeToFullFragment()
                 }
                 fabLike.id -> {
-                    this.likeProfile()
-                    this.switchCard()
+                    this.switchCard(true)
                 }
                 fabDislike.id -> {
                     Log.e(TAG, "++++++++++++++ DISLIKED +++++++++++++++++++")
-                    this.switchCard()
+                    this.switchCard(false)
                 }
             }
         }
@@ -131,7 +134,22 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
         Log.e(TAG, "+++++++++++++++ LIKED ++++++++++++++++")
     }
 
-    private fun switchCard() {
+    private fun dislikeProfile() {
+        //add the currently showing profile's dog id to the currently logged in user's dislike list
+        if (dogIdHolder.text.toString().equals("unset")) {
+            Log.e(TAG, "dogIdHolder not set.... why?")
+        } else {
+            if (this.currentUser.dislikedList != null) {
+                this.currentUser.dislikedList!!.add(dogIdHolder.text.toString())
+                Log.e(TAG, "currDogId set ${this.dogIdHolder.text.toString()}")
+            }
+
+            //update database
+            mainActivity.userViewModel.updateUser(this.currentUser)
+        }
+    }
+
+    private fun switchCard(liked: Boolean) {
         Log.e(TAG, "++++++ switching cards.......  ++++++++++")
 
         //Animate out, when finished change info, when changed animate back in
@@ -143,8 +161,18 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
             }
 
             override fun onAnimationEnd(animation: Animation?) {
-                //after finished, change data, then animate in.
+                //after finished swiping out, change data, then animate in.
+
+                if (liked) {
+                    this@HalfSwipeFragment.likeProfile()
+                } else {
+                    this@HalfSwipeFragment.dislikeProfile()
+                }
+
                 mainActivity.index += 1
+
+
+
                 this@HalfSwipeFragment.changeInfo()
 
                 Log.e(TAG, "Checking if EOL...")
@@ -212,11 +240,14 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
                             tvDogAge.setText(users[mainActivity.index].age.toString() + " yrs")
                             tvDogGender.setText(users[mainActivity.index].gender)
                             tvDogBreed.setText(users[mainActivity.index].breed)
-                            if (users[mainActivity.index].dogSize.equals("")) {
+                            if (users[mainActivity.index].dogSize == 0 || users[mainActivity.index].dogSize == null) {
                                 tvDogSize.setText("?")
                             } else {
-                                tvDogSize.setText(users[mainActivity.index].dogSize + " lbs")
+                                tvDogSize.setText(users[mainActivity.index].dogSize.toString() + " lbs")
                             }
+                            //set dog id holder text
+                            dogIdHolder.setText(users[mainActivity.index].dogId)
+
                         } else {
                             mainActivity.index += 1
                             changeInfo()

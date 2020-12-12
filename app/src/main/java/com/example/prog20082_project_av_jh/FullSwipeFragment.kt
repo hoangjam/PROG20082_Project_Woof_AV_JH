@@ -46,6 +46,8 @@ class FullSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
     private lateinit var tvDogSize: TextView
     private lateinit var tvDogBreed: TextView
     private lateinit var tvDogBio: TextView
+    private lateinit var dogIdHolder: TextView
+
 
     private lateinit var mainActivity: MainActivity
     private lateinit var tvEndOfLine: TextView
@@ -80,6 +82,7 @@ class FullSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
         tvDogSize = root.tvDogSize
         tvDogBreed = root.tvBreed
         tvDogBio = root.tvBio
+        dogIdHolder = root.dog_id_holder
 
         swipeView = root.profile_info
 
@@ -144,12 +147,11 @@ class FullSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
                     changeToHalfFragment()
                 }
                 fabLike.id -> {
-                    this.likeProfile()
-                    this.switchCard()
+                    this.switchCard(true)
                 }
                 fabDislike.id -> {
                     Log.e(TAG, "++++++++++++++ DISLIKED +++++++++++++++++++")
-                    this.switchCard()
+                    this.switchCard(false)
                 }
             }
         }
@@ -159,7 +161,7 @@ class FullSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
         Navigation.findNavController(requireView()).navigate(R.id.action_nav_swipe_full_to_nav_swipe_half)
     }
 
-    private fun switchCard() {
+    private fun switchCard(liked: Boolean) {
         Log.e(TAG, "++++++ switching cards.......  ++++++++++")
 
         //Animate out, when finished change info, when changed animate back in
@@ -171,8 +173,18 @@ class FullSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
             }
 
             override fun onAnimationEnd(animation: Animation?) {
-                mainActivity.index ++
+
                 //after finished, change data, then animate in.
+
+                if (liked) {
+                    this@FullSwipeFragment.likeProfile()
+                } else {
+                    this@FullSwipeFragment.dislikeProfile()
+                }
+
+                mainActivity.index += 1
+
+
                 this@FullSwipeFragment.changeInfo()
 
                 //as long as theres another card, slide it in again
@@ -214,11 +226,14 @@ class FullSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
                             tvDogAge.setText(users[mainActivity.index].age.toString() + " yrs")
                             tvDogGender.setText(users[mainActivity.index].gender)
                             tvDogBreed.setText(users[mainActivity.index].breed)
-                            if (users[mainActivity.index].dogSize.equals("")) {
+                            tvDogBio.setText(users[mainActivity.index].bio)
+                            if (users[mainActivity.index].dogSize == 0 || users[mainActivity.index].dogSize == null) {
                                 tvDogSize.setText("?")
                             } else {
-                                tvDogSize.setText(users[mainActivity.index].dogSize + " lbs")
+                                tvDogSize.setText(users[mainActivity.index].dogSize.toString() + " lbs")
                             }
+                            //set dog id holder text
+                            dogIdHolder.setText(users[mainActivity.index].dogId)
                         } else {
                             mainActivity.index += 1
                             changeInfo()
@@ -236,6 +251,21 @@ class FullSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
 
     private fun likeProfile() {
         Log.e(TAG, "+++++++++++++ Profile Liked +++++++++")
+    }
+
+    private fun dislikeProfile() {
+        //add the currently showing profile's dog id to the currently logged in user's dislike list
+        if (dogIdHolder.text.toString().equals("unset")) {
+            Log.e(TAG, "dogIdHolder not set.... why?")
+        } else {
+            if (this.currentUser.dislikedList != null) {
+                this.currentUser.dislikedList!!.add(dogIdHolder.text.toString())
+                Log.e(TAG, "currDogId set ${this.dogIdHolder.text.toString()}")
+            }
+
+            //update database
+            mainActivity.userViewModel.updateUser(this.currentUser)
+        }
     }
 
     private fun noMoreDogs() {

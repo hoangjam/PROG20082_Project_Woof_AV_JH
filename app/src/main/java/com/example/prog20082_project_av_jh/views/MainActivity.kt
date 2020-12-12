@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var header: LinearLayout
     private lateinit var navHost : NavHostFragment
     lateinit var userViewModel: UserViewModel
-    var showingProfile: User? = null
+    //var showingProfile: User? = null
     var currUserEmail = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
     var index = 0
     var swipeEOL = false
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         navHost = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?)!!
 
-        showingProfile = User()
+        //showingProfile = User()
 
     }
 

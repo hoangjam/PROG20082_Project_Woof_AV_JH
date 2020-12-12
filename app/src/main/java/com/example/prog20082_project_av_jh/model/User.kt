@@ -29,11 +29,11 @@ data class User(
         @ColumnInfo(name = "breed") var breed: String?,
         @ColumnInfo(name = "age") var age: Int?,
         @ColumnInfo(name = "bio") var bio: String?,
-        @ColumnInfo(name = "dog_id") var dogId: Int = UUID.randomUUID().toString().toInt(),
-        @ColumnInfo(name = "dog_size") var dogSize: String?,
-        @ColumnInfo(name = "liked_list") var likedList: ArrayList<Int>?,
-        @ColumnInfo(name = "matched_list") var matchedList: ArrayList<Int>?,
-        @ColumnInfo(name = "disliked_list") var dislikedList: ArrayList<Int>?,
+        @ColumnInfo(name = "dog_id") var dogId: String = UUID.randomUUID().toString(),
+        @ColumnInfo(name = "dog_size") var dogSize: Int?,
+        @ColumnInfo(name = "liked_list") var likedList: ArrayList<String>?,
+        @ColumnInfo(name = "matched_list") var matchedList: ArrayList<String>?,
+        @ColumnInfo(name = "disliked_list") var dislikedList: ArrayList<String>?,
         @ColumnInfo(name = "last_location") var lastLocation: String?
 ){
     constructor() : this(
@@ -46,11 +46,28 @@ data class User(
             "",
             0,
             "",
+            UUID.randomUUID().toString(),
             0,
-            "",
-            arrayListOf<Int>(),
-            arrayListOf<Int>(),
-            arrayListOf<Int>(),
+            arrayListOf<String>(),
+            arrayListOf<String>(),
+            arrayListOf<String>(),
             ""
     )
+        constructor(name: String, email: String, phone: String, password: String, dName: String, gender: String, breed: String, age: Int, bio: String, dogSize: Int) : this(
+                name,
+                email,
+                phone,
+                password,
+                dName,
+                gender,
+                breed,
+                age,
+                bio,
+                UUID.randomUUID().toString(),
+                dogSize,
+                arrayListOf<String>(),
+                arrayListOf<String>(),
+                arrayListOf<String>(),
+                ""
+        )
 }

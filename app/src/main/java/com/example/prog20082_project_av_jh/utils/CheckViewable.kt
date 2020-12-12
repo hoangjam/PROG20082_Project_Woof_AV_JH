@@ -15,25 +15,25 @@ interface CheckViewable {
         if (toCheck.email.equals(currUser.email)) {
             return false
         } else {
-            if (currUser.likedList!= null) {
-                for (userId in currUser.likedList!!) {
-                    if (userId.equals(currUser.dogId)) {
+            if (!currUser.likedList.isNullOrEmpty()) {
+                for (dogId in currUser.likedList!!) {
+                    if (toCheck.dogId.equals(dogId)) {
                         return false
                     }
                 }
             }
 
-            if (currUser.matchedList!= null) {
-                for (userId in currUser.likedList!!) {
-                    if (userId.equals(currUser.dogId)) {
+            if (!currUser.matchedList.isNullOrEmpty()) {
+                for (dogId in currUser.matchedList!!) {
+                    if (toCheck.dogId.equals(dogId)) {
                         return false
                     }
                 }
             }
 
-            if (currUser.dislikedList!= null) {
-                for (userId in currUser.likedList!!) {
-                    if (userId.equals(currUser.dogId)) {
+            if (!currUser.dislikedList.isNullOrEmpty()) {
+                for (dogId in currUser.dislikedList!!) {
+                    if (toCheck.dogId.equals(dogId)) {
                         return false
                     }
                 }

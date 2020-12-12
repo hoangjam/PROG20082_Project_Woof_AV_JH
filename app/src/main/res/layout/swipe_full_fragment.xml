@@ -9,6 +9,15 @@
     android:clickable="true">
 
     <TextView
+        android:id="@+id/dog_id_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="unset"/>
+
+    <TextView
         android:id="@+id/tvEndOfLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

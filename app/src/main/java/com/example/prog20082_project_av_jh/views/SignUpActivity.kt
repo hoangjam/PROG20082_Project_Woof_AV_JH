@@ -9,8 +9,13 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.prog20082_project_av_jh.R
 import com.example.prog20082_project_av_jh.model.User
+import com.example.prog20082_project_av_jh.preferences.SharedPreferencesManager
 import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
+import kotlinx.android.synthetic.main.activity_landing.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.activity_sign_up.btnSignUp
+import kotlinx.android.synthetic.main.activity_sign_up.edtEmail
+import kotlinx.android.synthetic.main.activity_sign_up.edtPassword
 import java.lang.Exception
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
@@ -53,6 +58,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                     if(this.validateData()){
                         this.fetchData()
                         this.saveUserToDB()
+                        this.savePreferences()
                         this.goToMain()
                     }
                 }
@@ -67,6 +73,14 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             Log.e(TAG, ex.toString())
             Log.e(TAG, ex.localizedMessage)
         }
+    }
+
+    private fun savePreferences(){
+        SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, edtEmail.text.toString())
+
+        Log.e("SHARED PREFERENCES MANAGER", SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "").toString())
+
+        SharedPreferencesManager.write(SharedPreferencesManager.PASSWORD, edtPassword.text.toString())
     }
 
     fun fetchData(){
