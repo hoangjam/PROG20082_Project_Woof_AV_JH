@@ -111,14 +111,6 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         SharedPreferencesManager.write(SharedPreferencesManager.PASSWORD, edtPassword.text.toString())
     }
 
-    private fun savePreferences(){
-        SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, edtEmail.text.toString())
-
-        Log.e("SHARED PREFERENCES MANAGER", SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "").toString())
-
-        SharedPreferencesManager.write(SharedPreferencesManager.PASSWORD, edtPassword.text.toString())
-    }
-
     fun fetchData(lat: Double, lng: Double){
         user.oName = edtOwnerName.text.toString()
         user.email = edtEmail.text.toString()
