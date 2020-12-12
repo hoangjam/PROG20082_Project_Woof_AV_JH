@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun changeFragment (fragment: Fragment){
+    fun toProfileFragment (){
         //check current fragment, alter action based on that
         //
         //this.navController.navigate(R.id.action_nav_swipe_half_to_nav_profile)

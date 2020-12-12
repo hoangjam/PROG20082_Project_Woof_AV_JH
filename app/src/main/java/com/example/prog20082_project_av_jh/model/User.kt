@@ -33,6 +33,7 @@ data class User(
         @ColumnInfo(name = "dog_size") var dogSize: String?,
         @ColumnInfo(name = "liked_list") var likedList: ArrayList<Int>?,
         @ColumnInfo(name = "matched_list") var matchedList: ArrayList<Int>?,
+        @ColumnInfo(name = "disliked_list") var dislikedList: ArrayList<Int>?,
         @ColumnInfo(name = "last_location") var lastLocation: String?
 ){
     constructor() : this(
@@ -47,6 +48,7 @@ data class User(
             "",
             0,
             "",
+            arrayListOf<Int>(),
             arrayListOf<Int>(),
             arrayListOf<Int>(),
             ""
