@@ -1,6 +1,8 @@
 package com.example.prog20082_project_av_jh.views
 
+import android.content.Context
 import android.content.Intent
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +10,15 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.prog20082_project_av_jh.R
+import com.example.prog20082_project_av_jh.locationservices.LocationManager
 import com.example.prog20082_project_av_jh.model.User
 import com.example.prog20082_project_av_jh.preferences.SharedPreferencesManager
 import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
-import kotlinx.android.synthetic.main.activity_landing.*
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.activity_sign_up.btnSignUp
 import kotlinx.android.synthetic.main.activity_sign_up.edtEmail
@@ -21,6 +28,12 @@ import java.lang.Exception
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
     val TAG: String = this@SignUpActivity.toString()
     var selectedGender: String = ""
+    private var lat: Double = 0.0
+    private var lng: Double = 0.0
+
+    private lateinit var locationManager: LocationManager
+    private lateinit var location: Location
+    private lateinit var locationCallback: LocationCallback
 
     companion object {
         var user = User()
@@ -49,6 +62,25 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
         btnSignUp.setOnClickListener(this)
+
+        this.locationManager = LocationManager(this@SignUpActivity)
+        this.lat = 128.0
+        this.lng = 64.0
+
+        if(LocationManager.locationPermissionsGranted){
+            locationManager.getLastLocation()
+        }
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                locationResult ?: return
+
+                for (location in locationResult.locations) {
+                    lat = location.latitude
+                    lng = location.longitude
+                }
+            }
+        }
+        locationManager.requestLocationUpdates(locationCallback)
     }
 
     override fun onClick(v: View?) {
@@ -56,7 +88,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             when(v.id){
                 btnSignUp.id ->{
                     if(this.validateData()){
-                        this.fetchData()
+                        this.fetchData(lat, lng)
                         this.saveUserToDB()
                         this.savePreferences()
                         this.goToMain()
@@ -65,6 +97,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
     fun saveUserToDB(){
         try{
             var userViewModel = UserViewModel(this.application)
@@ -83,7 +116,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         SharedPreferencesManager.write(SharedPreferencesManager.PASSWORD, edtPassword.text.toString())
     }
 
-    fun fetchData(){
+    fun fetchData(lat: Double, lng: Double){
         user.oName = edtOwnerName.text.toString()
         user.email = edtEmail.text.toString()
         user.phoneNumber = edtPhoneNumber.text.toString()
@@ -94,6 +127,26 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         user.age = edtAge.text.toString().toInt()
         user.bio = edtBio.text.toString()
 
+        user.lat = lat
+        user.lng = lng
+
+//        this.locationManager = LocationManager(this@SignUpActivity)
+//        if(LocationManager.locationPermissionsGranted){
+//            locationManager.getLastLocation()
+//            Log.e(TAG, "Location Permissions Granted " + LocationManager.locationPermissionsGranted.toString())
+//        }
+//        locationCallback = object : LocationCallback(){
+//            override fun onLocationResult(locationResult: LocationResult?) {
+//                locationResult ?: return
+//                lat = location.latitude
+//                lng = location.longitude
+//
+//                user.lat = location.latitude
+//                user.lng = location.longitude
+//
+//                Log.e(TAG, "Location.lat: " + location.latitude + "Location.lng" + location.longitude)
+//            }
+//        }
         Log.d(TAG, "User : " + user.toString())
     }
 

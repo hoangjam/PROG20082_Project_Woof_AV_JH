@@ -34,7 +34,8 @@ data class User(
         @ColumnInfo(name = "liked_list") var likedList: ArrayList<String>?,
         @ColumnInfo(name = "matched_list") var matchedList: ArrayList<String>?,
         @ColumnInfo(name = "disliked_list") var dislikedList: ArrayList<String>?,
-        @ColumnInfo(name = "last_location") var lastLocation: String?
+        @ColumnInfo(name = "latitude") var lat: Double?,
+        @ColumnInfo(name = "longitude") var lng: Double?
 ){
     constructor() : this(
             "",
@@ -51,7 +52,8 @@ data class User(
             arrayListOf<String>(),
             arrayListOf<String>(),
             arrayListOf<String>(),
-            ""
+            0.0,
+            0.0
     )
         constructor(name: String, email: String, phone: String, password: String, dName: String, gender: String, breed: String, age: Int, bio: String, dogSize: Int) : this(
                 name,
@@ -68,6 +70,7 @@ data class User(
                 arrayListOf<String>(),
                 arrayListOf<String>(),
                 arrayListOf<String>(),
-                ""
+                0.0,
+                0.0
         )
 }
