@@ -63,7 +63,7 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var tvOwnerName: TextView
     private lateinit var btnCall: Button
 
-    private lateinit var matchedPhoneHolder: TextView
+//    private lateinit var matchedPhoneHolder: TextView
 
     val REQUEST_CALL = 123
 
@@ -81,17 +81,17 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_matched_profile, container, false)
 
-        matchedPhoneHolder = view.hiddenEmail
+//        matchedPhoneHolder = view.hiddenEmail
 
-        var bundle = this.arguments
-
-        if (bundle != null) {
-            this.matchedEmail = bundle.get("matchedEmail").toString()
-            matchedPhoneHolder.setText(this.matchedEmail)
-//            Toast.makeText(this.requireContext(), this.matchedEmail, Toast.LENGTH_SHORT).show()
-        } else {
-            Log.e(TAG, "bundle not recieved...")
-        }
+//        var bundle = this.arguments
+//
+//        if (bundle != null) {
+//            this.matchedEmail = bundle.get("matchedEmail").toString()
+//            matchedPhoneHolder.setText(this.matchedEmail)
+////            Toast.makeText(this.requireContext(), this.matchedEmail, Toast.LENGTH_SHORT).show()
+//        } else {
+//            Log.e(TAG, "bundle not recieved...")
+//        }
 
         tvDogName = view.tvDogName
         tvDogAge = view.tvDogAge
@@ -105,8 +105,8 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
 
         userViewModel = UserViewModel(requireActivity().application)
 
-        if (!matchedEmail.isNullOrEmpty()) {
-            this.getMatchedUser()
+        if (receivedUser!= null) {
+            this.populateProfile(receivedUser)
         }
 
         //Log.e(TAG, matchedUser.toString())
@@ -120,17 +120,17 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getMatchedUser() {
-        this.userViewModel.allUsers.observe(viewLifecycleOwner, {users ->
-            if (users != null) {
-                for (user in users) {
-                    if (user != null && user.email.equals(this.matchedEmail)) {
-                        matchedUser = user
-                        populateProfile(user)
-                    }
-                }
-            }
-
-        })
+//        this.userViewModel.allUsers.observe(viewLifecycleOwner, {users ->
+//            if (users != null) {
+//                for (user in users) {
+//                    if (user != null && user.email.equals(this.matchedEmail)) {
+//                        matchedUser = user
+//                        populateProfile(user)
+//                    }
+//                }
+//            }
+//
+//        })
     }
 
     private fun populateProfile(mUser: User) {
@@ -141,7 +141,7 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
         tvDogSize.setText(mUser.dogSize.toString())
         tvBio.setText(mUser.bio)
         tvOwnerName.setText(mUser.oName)
-        matchedPhoneHolder.setText(mUser.phoneNumber)
+//        matchedPhoneHolder.setText(mUser.phoneNumber)
     }
 
     override fun onClick(v: View?) {
@@ -161,7 +161,7 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
 
     private fun makeCall() {
 
-        val phoneNumber = matchedPhoneHolder.text.toString()
+        val phoneNumber = receivedUser.phoneNumber
         val callIntent = Intent(Intent.ACTION_CALL).apply {
             data = Uri.parse("tel:" + phoneNumber)
         }
