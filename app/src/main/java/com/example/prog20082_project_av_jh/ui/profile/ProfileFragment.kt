@@ -6,13 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
+import android.widget.*
 import com.example.prog20082_project_av_jh.R
 import com.example.prog20082_project_av_jh.model.User
 import com.example.prog20082_project_av_jh.preferences.SharedPreferencesManager
 import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import java.lang.Exception
 
@@ -34,12 +34,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     lateinit var edtEmail: EditText
     lateinit var edtPhoneNumber: EditText
     lateinit var edtDogName: EditText
-//    lateinit var selectedGender: String
+    lateinit var selectedGender: String
     lateinit var edtBreed: EditText
     lateinit var edtAge: EditText
     lateinit var edtBio: EditText
-    lateinit var btnSave: Button
+    lateinit var fabSaveEdit: FloatingActionButton
     lateinit var fabEditProfile: FloatingActionButton
+    lateinit var spnGender: Spinner
 
     lateinit var userViewModel: UserViewModel
     lateinit var existingUser: User
@@ -53,10 +54,39 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         }
 
         userViewModel = UserViewModel(this.requireActivity().application)
-//        selectedGender = resources.getStringArray(R.array.gender_array).get(0)
 
-        /*
-        spnGender.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val root = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        root.fabEditProfile.setOnClickListener(this)
+        root.fabSaveEdit.setOnClickListener(this)
+
+        edtOwnerName = root.edtOwnerName
+
+        edtEmail = root.edtEmail
+        edtPhoneNumber = root.edtPhoneNumber
+        edtDogName = root.edtDogName
+
+        selectedGender = root.spnGender.toString()
+
+        edtBreed = root.edtBreed
+        edtAge = root.edtAge
+        edtBio = root.edtBio
+
+        fabSaveEdit = root.fabSaveEdit
+        fabEditProfile = root.fabEditProfile
+
+        spnGender = root.spnGender
+        this.initializeSpinner()
+        spnGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -69,42 +99,22 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 selectedGender = resources.getStringArray(R.array.gender_array).get(2)
             }
-        }*/
+        }
 
         this.populateProfile()
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val root = inflater.inflate(R.layout.fragment_profile, container, false)
-
-        root.fabEditProfile.setOnClickListener(this)
-        root.btnSave.setOnClickListener(this)
-//        root.spnGender.setOnClickListener(this)
-
-        edtOwnerName = root.edtOwnerName
-
-//        edtOwnerName = root.edtOwnerName
-        edtEmail = root.edtEmail
-        edtPhoneNumber = root.edtPhoneNumber
-        edtDogName = root.edtDogName
-
-//        selectedGender = root.spnGender.toString()
-
-        edtBreed = root.edtBreed
-        edtAge = root.edtAge
-        edtBio = root.edtBio
-
-        btnSave = root.btnSave
-        fabEditProfile = root.fabEditProfile
 
         this.disableEdit()
 
         return root
 
+    }
+
+    private fun initializeSpinner() {
+        val genderAdapter = ArrayAdapter(this.requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            resources.getStringArray(R.array.gender_array))
+
+        spnGender.adapter = genderAdapter
     }
 
     companion object {
@@ -142,7 +152,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         edtEmail.setText(matchedUser.email)
                         edtPhoneNumber.setText(matchedUser.phoneNumber)
                         edtDogName.setText(matchedUser.dName)
-//                    spnGender.defaultFocusHighlightEnabled
+                        this.spnGender.setSelection(resources.getStringArray(R.array.gender_array).indexOf(matchedUser.gender))
                         edtBreed.setText(matchedUser.breed)
                         edtAge.setText(matchedUser.age.toString())
                         edtBio.setText(matchedUser.bio)
@@ -157,22 +167,26 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     fun enableEdit() {
+        fabEditProfile.visibility = View.GONE
+        fabSaveEdit.visibility = View.VISIBLE
         edtOwnerName.isEnabled = true
         edtEmail.isEnabled = true
         edtPhoneNumber.isEnabled = true
         edtDogName.isEnabled = true
-//        spnGender.isEnabled = true
+        this.spnGender.isEnabled = true
         edtBreed.isEnabled = true
         edtAge.isEnabled = true
         edtBio.isEnabled = true
     }
 
     fun disableEdit() {
+        fabEditProfile.visibility = View.VISIBLE
+        fabSaveEdit.visibility = View.GONE
         edtOwnerName.isEnabled = false
         edtEmail.isEnabled = false
         edtPhoneNumber.isEnabled = false
         edtDogName.isEnabled = false
-//        spnGender.isEnabled = false
+        spnGender.isEnabled = false
         edtBreed.isEnabled = false
         edtAge.isEnabled = false
         edtBio.isEnabled = false
@@ -184,15 +198,22 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         this.existingUser.phoneNumber = edtPhoneNumber.text.toString()
 
         this.existingUser.dName = edtDogName.text.toString()
-//        this.existingUser.gender = spnGender.toString()
+        this.existingUser.gender = spnGender.selectedItem.toString()
         this.existingUser.breed = edtBreed.text.toString()
         this.existingUser.age = edtAge.text.toString().toInt()
         this.existingUser.bio = edtBio.text.toString()
 
+        //if email was changed, change shared preferences too
+        if (this.existingUser.email.equals(SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, ""))) {
+            SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, this.existingUser.email)
+        }
+
         try {
             userViewModel.updateUser(existingUser)
+            Toast.makeText(this.requireContext(), "Changes saved successfully.", Toast.LENGTH_SHORT).show()
         } catch (ex: Exception) {
             Log.d("Profile Fragment", ex.localizedMessage)
+            Toast.makeText(this.requireContext(), "Save unsuccessful; changes unsaved.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -200,13 +221,9 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         when (v?.id) {
             fabEditProfile.id -> {
                 this.enableEdit()
-                fabEditProfile.visibility = View.GONE
-                btnSave.visibility = View.VISIBLE
             }
-            btnSave.id -> {
+            fabSaveEdit.id -> {
                 this.disableEdit()
-                fabEditProfile.visibility = View.VISIBLE
-                btnSave.visibility = View.GONE
                 this.saveToDB()
             }
         }
