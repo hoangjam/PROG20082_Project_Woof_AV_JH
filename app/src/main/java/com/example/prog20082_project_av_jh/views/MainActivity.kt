@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     var showingProfile: User? = null
     var currUserEmail = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
     var index = 0
+    var swipeEOL = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

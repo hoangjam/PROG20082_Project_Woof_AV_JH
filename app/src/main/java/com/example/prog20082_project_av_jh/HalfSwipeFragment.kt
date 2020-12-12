@@ -18,6 +18,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.prog20082_project_av_jh.model.User
+import com.example.prog20082_project_av_jh.preferences.SharedPreferencesManager
 import com.example.prog20082_project_av_jh.utils.CheckViewable
 import com.example.prog20082_project_av_jh.views.MainActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -38,6 +39,7 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
     private lateinit var tvDogBreed: TextView
     private lateinit var mainActivity: MainActivity
     private lateinit var currentUser: User
+    private lateinit var tvEndOfLine: TextView
 
     private val TAG =  this@HalfSwipeFragment.toString()
 
@@ -57,6 +59,7 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
         tvDogSize = root.tvDogSize
         tvDogGender = root.tvDogGender
         tvDogBreed= root.tvBreed
+        tvEndOfLine = root.tvEndOfLine
 
         cardView.setOnClickListener(this)
         fabLike.setOnClickListener(this)
@@ -78,8 +81,21 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
                 }
             })
         }
+        Log.e(TAG, "CREATE CALLED")
 
-        this.changeInfo()
+        //only call if we're resuming this view after reaching EOL and need to check if more results have entered database
+        if (mainActivity.swipeEOL) {
+            Log.e(TAG, "RESUMED AND EOL")
+            mainActivity.index = 0
+            //check if there is another user available, if so, display it.
+            mainActivity.userViewModel.allUsers.observe(viewLifecycleOwner, {users ->
+                if (mainActivity.index < users.size) {
+                    moreDogs()
+                }
+            })
+        } else {
+            this.changeInfo()
+        }
 
         return root
     }
@@ -132,8 +148,15 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
 
             override fun onAnimationEnd(animation: Animation?) {
                 //after finished, change data, then animate in.
+                mainActivity.index += 1
                 this@HalfSwipeFragment.changeInfo()
-                this@HalfSwipeFragment.slideViewIn()
+
+                Log.e(TAG, "Checking if EOL...")
+
+                //as long as theres another card, slide it in again
+                if (!mainActivity.swipeEOL) {
+                    this@HalfSwipeFragment.slideViewIn()
+                }
             }
 
             override fun onAnimationRepeat(animation: Animation?) {
@@ -150,46 +173,67 @@ class HalfSwipeFragment : Fragment(), View.OnClickListener, CheckViewable {
         cardView.startAnimation(anim)
     }
 
+    private fun fadeViewIn() {
+        var anim = AnimationUtils.loadAnimation(this.requireContext(), R.anim.fade_in)
+        tvEndOfLine.startAnimation(anim)
+    }
+
+    private fun noMoreDogs() {
+        Toast.makeText(this.requireActivity(), "Last dog reached!", Toast.LENGTH_SHORT).show()
+        cardView.setVisibility(View.GONE)
+        tvEndOfLine.setVisibility(View.VISIBLE)
+        fabDislike.setVisibility(View.GONE)
+        fabLike.setVisibility(View.GONE)
+        fadeViewIn()
+    }
+
+    private fun moreDogs() {
+        mainActivity.swipeEOL = false
+        cardView.setVisibility(View.VISIBLE)
+        tvEndOfLine.setVisibility(View.INVISIBLE)
+        fabDislike.setVisibility(View.VISIBLE)
+        fabLike.setVisibility(View.VISIBLE)
+        this.changeInfo()
+        //doesnt need to be called because oncreateview does it
+    }
+
     private fun changeInfo() {
+        Log.e(TAG, "CHANGING INFO -.......... ")
 
         mainActivity.userViewModel.allUsers.observe(viewLifecycleOwner, {users ->
 
-            try {
-                //if user is not viewable, then try again with the next user
-                if (users[mainActivity.index] != null) {
-                    if (isViewable(users[mainActivity.index], currentUser)) {
-                        tvDogName.setText(users[mainActivity.index].dName)
-                        tvDogAge.setText(users[mainActivity.index].age.toString() + " yrs")
-                        tvDogGender.setText(users[mainActivity.index].gender)
-                        tvDogBreed.setText(users[mainActivity.index].breed)
-                        if (users[mainActivity.index].dogSize.equals("")) {
-                            tvDogSize.setText("?")
+            if (mainActivity.index >= users.size) {
+                Log.e(TAG, "index: ${mainActivity.index}, size: ${users.size}")
+                mainActivity.swipeEOL = true;
+                this.noMoreDogs()
+            } else {
+
+                try {
+                    if (users[mainActivity.index] != null) {
+                        //if user is not viewable, then try again with the next user
+                        if (isViewable(users[mainActivity.index], currentUser)) {
+                            tvDogName.setText(users[mainActivity.index].dName)
+                            tvDogAge.setText(users[mainActivity.index].age.toString() + " yrs")
+                            tvDogGender.setText(users[mainActivity.index].gender)
+                            tvDogBreed.setText(users[mainActivity.index].breed)
+                            if (users[mainActivity.index].dogSize.equals("")) {
+                                tvDogSize.setText("?")
+                            } else {
+                                tvDogSize.setText(users[mainActivity.index].dogSize + " lbs")
+                            }
                         } else {
-                            tvDogSize.setText(users[mainActivity.index].dogSize + " lbs")
+                            mainActivity.index += 1
+                            changeInfo()
                         }
-                        mainActivity.index += 1
-                    }  else {
-                        mainActivity.index += 1
-                        changeInfo()
+
                     }
+                } catch (ex: IndexOutOfBoundsException) {
+                    mainActivity.swipeEOL = true
+                    this.noMoreDogs()
                 }
-            } catch (ex: IndexOutOfBoundsException) {
-                Toast.makeText(this.requireActivity(), "Last dog reached", Toast.LENGTH_SHORT)
             }
 
         })
-
-
-//        //populate info based on thisuser
-//        tvDogName.setText(mainActivity.showingProfile.dName)
-//        tvDogAge.setText(mainActivity.showingProfile.age.toString())
-//        tvDogGender.setText(mainActivity.showingProfile.gender)
-//        tvDogBreed.setText(mainActivity.showingProfile.breed)
-//        tvDogSize.setText(mainActivity.showingProfile.breed)
-//
-//        //update index, update showing profile
-//        currentIndex++
-//        mainActivity.showingProfile = mainActivity.userList[currentIndex]
     }
 
 }
