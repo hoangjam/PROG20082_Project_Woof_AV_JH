@@ -29,6 +29,10 @@ class UserRepository(
         return userDao.getUserByLoginInfo(email, password)
     }
 
+    fun getUserByDogId(dogId: String): User? {
+        return userDao.getUserByDogId(dogId)
+    }
+
 //    fun getUserLikedInfo(email: String) : User?{
 //        return userDao.getUserByLikedList(email)
 //    }

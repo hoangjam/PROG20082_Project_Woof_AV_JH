@@ -24,6 +24,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     var allUsers: LiveData<List<User>>
 
     private var matchedUser : MutableLiveData<User>?
+    private var matchedUserFromDogId : MutableLiveData<User>?
 
     init{
         val userDao = WoofDatabase.getDatabase(application).userDao()
@@ -32,6 +33,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         allUsers = userRepo.allUsers
 
         matchedUser = MutableLiveData()
+        matchedUserFromDogId = MutableLiveData()
     }
 
     fun insertAll(user: User) = viewModelScope.launch(Dispatchers.IO){
@@ -61,5 +63,16 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         getUserByEmailCoroutine(email)
         Log.d("UserViewModel : ", matchedUser.toString())
         return matchedUser
+    }
+
+    private fun getUserByDogIdCoroutine(dogId: String) = viewModelScope.launch (Dispatchers.IO){
+        val user = userRepo.getUserByDogId(dogId)
+        matchedUserFromDogId?.postValue(user)
+    }
+
+    fun getUserByDogId(dogId: String) : MutableLiveData<User>? {
+        getUserByDogIdCoroutine(dogId)
+        Log.d("UserViewModel : ", matchedUser.toString())
+        return matchedUserFromDogId
     }
 }
