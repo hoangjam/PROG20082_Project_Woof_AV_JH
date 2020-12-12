@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.Navigation
 import com.example.prog20082_project_av_jh.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -46,6 +47,13 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+        }
+
+        var bundle = this.arguments
+
+        if (bundle != null) {
+            var matchedEmail = bundle.get("matchedEmail").toString()
+            Toast.makeText(context, matchedEmail, Toast.LENGTH_SHORT).show()
         }
     }
 

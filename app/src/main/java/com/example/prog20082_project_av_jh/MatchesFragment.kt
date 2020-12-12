@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.prog20082_project_av_jh.adapters.MatchesAdapter
 import com.example.prog20082_project_av_jh.adapters.OnItemClickListener
 import com.example.prog20082_project_av_jh.model.User
+import com.example.prog20082_project_av_jh.ui.MatchedProfileFragment
 import com.example.prog20082_project_av_jh.views.MainActivity
 import kotlinx.android.synthetic.main.matches_list_fragment.view.*
 
@@ -136,6 +137,15 @@ class MatchesFragment : Fragment(), OnItemClickListener {
 
     override fun onItemClicked(match: User) {
         Toast.makeText(context, "email: " + match.email, Toast.LENGTH_SHORT).show()
+
+        var bundle = Bundle()
+        bundle.putString("matchedEmail", match.email)
+
+        var matchedProfileFragment = MatchedProfileFragment()
+        matchedProfileFragment.arguments = bundle
+
+        var navController = findNavController()
+        navController.navigate(R.id.action_nav_matches_to_matched_profile)
     }
 
 }
