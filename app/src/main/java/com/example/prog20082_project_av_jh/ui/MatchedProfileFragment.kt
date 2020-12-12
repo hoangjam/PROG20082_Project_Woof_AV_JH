@@ -187,6 +187,9 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
     }
 
     companion object {
+
+        lateinit var receivedUser : User
+
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
@@ -205,4 +208,5 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
                 }
             }
     }
+
 }

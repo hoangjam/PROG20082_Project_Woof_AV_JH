@@ -25,6 +25,7 @@ import com.example.prog20082_project_av_jh.MatchesFragment
 import com.example.prog20082_project_av_jh.R
 import com.example.prog20082_project_av_jh.model.User
 import com.example.prog20082_project_av_jh.preferences.SharedPreferencesManager
+import com.example.prog20082_project_av_jh.ui.MatchedProfileFragment
 import com.example.prog20082_project_av_jh.ui.profile.ProfileFragment
 import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import com.google.android.material.navigation.NavigationView
@@ -146,4 +147,5 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             super.onBackPressed()
         }
     }
+
 }
