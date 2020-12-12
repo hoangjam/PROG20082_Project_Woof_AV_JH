@@ -23,6 +23,7 @@ import com.example.prog20082_project_av_jh.HalfSwipeFragment
 import com.example.prog20082_project_av_jh.MatchesFragment
 import com.example.prog20082_project_av_jh.R
 import com.example.prog20082_project_av_jh.model.User
+import com.example.prog20082_project_av_jh.preferences.SharedPreferencesManager
 import com.example.prog20082_project_av_jh.ui.profile.ProfileFragment
 import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import com.google.android.material.navigation.NavigationView
@@ -31,23 +32,22 @@ import kotlinx.android.synthetic.main.swipe_half_fragment.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
+    private val TAG = this@MainActivity.toString()
     private lateinit var appBarConfiguration: AppBarConfiguration
-
     private lateinit var navController: NavController
-
     private lateinit var header: LinearLayout
-
     private lateinit var navHost : NavHostFragment
-
     private lateinit var userList: MutableList<User>
-
     private lateinit var userViewModel: UserViewModel
+    private lateinit var showingProfile: User
+    var currUserEmail = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         userViewModel = UserViewModel(this.application)
+        userList = mutableListOf()
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -80,12 +80,35 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         navHost = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?)!!
 
-        this.getUsers()
+        this.fetchAllUsers()
     }
 
-    private fun getUsers() {
+    fun setShowingProfile(curr: User) {
+        this.showingProfile = curr
+    }
 
-        //get users
+    fun getUsers() : MutableList<User> {
+        return this.userList
+    }
+
+    private fun fetchAllUsers() {
+
+        Log.e(TAG, "++++++++++++  FETCHING VIEWABLE USERS.... ++++++++")
+
+        userViewModel.allUsers.observe(this, { users ->
+
+            //add all users to mutable list except the current users, liked users, matched users, and disliked users.
+            //TODO: remove liked users, matched users, and disliked users
+            if (users != null) {
+                for (user in users) {
+                    if (user.email != this.currUserEmail){
+                        userList.add(user)
+                        Log.e(TAG, user.toString())
+                    }
+                }
+            }
+
+        })
 
     }
 
