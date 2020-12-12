@@ -117,23 +117,6 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         user.lat = lat
         user.lng = lng
 
-//        this.locationManager = LocationManager(this@SignUpActivity)
-//        if(LocationManager.locationPermissionsGranted){
-//            locationManager.getLastLocation()
-//            Log.e(TAG, "Location Permissions Granted " + LocationManager.locationPermissionsGranted.toString())
-//        }
-//        locationCallback = object : LocationCallback(){
-//            override fun onLocationResult(locationResult: LocationResult?) {
-//                locationResult ?: return
-//                lat = location.latitude
-//                lng = location.longitude
-//
-//                user.lat = location.latitude
-//                user.lng = location.longitude
-//
-//                Log.e(TAG, "Location.lat: " + location.latitude + "Location.lng" + location.longitude)
-//            }
-//        }
         Log.d(TAG, "User : " + user.toString())
     }
 
