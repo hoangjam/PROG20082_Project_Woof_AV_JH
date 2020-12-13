@@ -1,10 +1,14 @@
 package com.example.prog20082_project_av_jh.views
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.widget.CompoundButton
+import android.widget.Switch
 import android.widget.Toast
 import com.example.prog20082_project_av_jh.R
 import com.example.prog20082_project_av_jh.model.User
@@ -13,10 +17,12 @@ import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.activity_landing.*
 import java.lang.Exception
 
-class LandingActivity : AppCompatActivity(), View.OnClickListener {
+class LandingActivity : AppCompatActivity(), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     val TAG: String = this@LandingActivity.toString()
     lateinit var userViewModel: UserViewModel
+//    lateinit var rememberMeSwitch : Switch
+    private var rememberMe = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,20 +30,44 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener {
 
         btnSignIn.setOnClickListener(this)
         btnSignUp.setOnClickListener(this)
+        swRememberMe.setOnCheckedChangeListener(this)
 
         SharedPreferencesManager.init(applicationContext)
 
         userViewModel = UserViewModel(this.application)
         this.fetchAllUsers()
+
+        //check if saved preferences contains a password, if so remember me was checked so log in user automatically
+        if (!SharedPreferencesManager.read(SharedPreferencesManager.PASSWORD, "").equals("")) {
+            this.populateAndLogin()
+        }
         
+    }
+
+    private fun populateAndLogin() {
+
+        edtEmail.setText(SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, ""))
+        edtPassword.setText(SharedPreferencesManager.read(SharedPreferencesManager.PASSWORD, ""))
+
+        if (this.validateData()){
+            this.validateUser()
+        }
+
+    }
+
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        rememberMe = isChecked
     }
 
     private fun savePreferences(){
         SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, edtEmail.text.toString())
 
-        Log.e("SHARED PREFERENCES MANAGER", SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "").toString())
-
-        SharedPreferencesManager.write(SharedPreferencesManager.PASSWORD, edtPassword.text.toString())
+        if (rememberMe) {
+            SharedPreferencesManager.write(
+                SharedPreferencesManager.PASSWORD,
+                edtPassword.text.toString()
+            )
+        }
     }
 
     override fun onClick(v: View?) {
