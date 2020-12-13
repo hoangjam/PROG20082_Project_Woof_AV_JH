@@ -7,6 +7,7 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.Display
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -150,6 +151,7 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
                 fabToMap.id -> {
                     Log.e(TAG, "LOCATION BUTTON CLICKED")
                     val intent = Intent(activity, DisplayMapActivity::class.java)
+                    DisplayMapActivity.receivedUser = receivedUser
                     startActivity(intent)
                 }
                 btnCall.id -> {

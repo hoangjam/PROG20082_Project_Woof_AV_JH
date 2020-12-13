@@ -37,6 +37,10 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var existingUser: User
     var currentUserEmail = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
 
+    companion object {
+        lateinit var receivedUser: User
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_map)
