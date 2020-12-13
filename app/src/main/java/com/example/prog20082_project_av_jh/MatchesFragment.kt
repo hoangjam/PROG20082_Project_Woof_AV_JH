@@ -1,5 +1,6 @@
 package com.example.prog20082_project_av_jh
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.matches_list_fragment.view.*
 class MatchesFragment : Fragment(), OnItemClickListener {
 
     private var columnCount = 1
+    private val TAG = this@MatchesFragment.toString()
 
     private lateinit var rvMatches: RecyclerView
     private lateinit var matchesAdapter: MatchesAdapter
@@ -135,18 +137,21 @@ class MatchesFragment : Fragment(), OnItemClickListener {
             }
     }
 
+
     override fun onItemClicked(match: User) {
 
-        var bundle = Bundle()
-        bundle.putString("matchedEmail", match.email)
-
-        var matchedProfileFragment = MatchedProfileFragment.newInstance("matchedEmail", match.email)
-        matchedProfileFragment.arguments = bundle
-
-//        var navController = findNavController()
-//        navController.navigate(R.id.action_nav_matches_to_matched_profile)
-
-        parentFragmentManager.beginTransaction().replace(R.id.matchesFragment, matchedProfileFragment).commit()
+//        var bundle = Bundle()
+//        bundle.putString("matchedEmail", match.email)
+//
+//        var matchedProfileFragment = MatchedProfileFragment.newInstance("matchedEmail", match.email)
+        MatchedProfileFragment.receivedUser = match
+        Navigation.findNavController(requireView()).navigate(R.id.action_nav_matches_to_matched_profile)
+//
+////        var navController = findNavController()
+////        navController.navigate(R.id.action_nav_matches_to_matched_profile)
+//
+//        parentFragmentManager.beginTransaction().replace(R.id.matchesFragment, matchedProfileFragment).commit()
     }
+
 
 }

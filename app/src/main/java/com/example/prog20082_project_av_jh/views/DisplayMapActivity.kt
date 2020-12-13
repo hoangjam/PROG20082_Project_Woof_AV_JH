@@ -37,6 +37,10 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var existingUser: User
     var currentUserEmail = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
 
+    companion object {
+        lateinit var receivedUser: User
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_map)
@@ -49,7 +53,8 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         // hardcoded for now.
-        this.currentLocation = LatLng(149.753, -928.535)
+
+        this.currentLocation = LatLng(receivedUser.lat!!.toDouble(), receivedUser.lng!!.toDouble())
 
         if (LocationManager.locationPermissionsGranted) {
             this.getLastLocation()
