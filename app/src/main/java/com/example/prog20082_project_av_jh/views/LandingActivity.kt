@@ -153,8 +153,10 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener, CompoundButto
                     "Female",
                     "Beagle",
                     4,
-                    "fren",
-                    15
+                    "Samara is beagle mutt rescue. She's gots lots of energy and just wants to chase a ball (or her doggy playmate) around!",
+                    25,
+                    43.467518,
+                    -79.687668
                 ))
 
             this.userViewModel.insertAll(
@@ -163,12 +165,14 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener, CompoundButto
                     "jh@jh.com",
                     "2342342345",
                     "123",
-                    "forget",
+                    "Rosco",
                     "Male",
-                    "Good boyo",
-                    5,
-                    "a good boy",
-                    25
+                    "Great Dane",
+                    8,
+                    "Good boy who enjoys long walks and sunbathing at the park",
+                    55,
+                    43.589046,
+                    -79.644119
                 ))
 
             this.userViewModel.insertAll(
@@ -179,10 +183,12 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener, CompoundButto
                     "123",
                     "Hera",
                     "Female",
-                    "cat",
-                    4,
-                    "actually cat but still good",
-                    9
+                    "Whippet",
+                    2,
+                    "Hera is a speed demon for about a few minutes before she collapses on the couch for cuddles!",
+                    13,
+                    43.836338,
+                    -79.874481
                 ))
 
             this.userViewModel.insertAll(
@@ -193,10 +199,12 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener, CompoundButto
                     "123",
                     "Nala",
                     "Female",
-                    "Cat",
+                    "Yorkie",
                     0,
-                    "smol bean",
-                    2
+                    "Nala is a tiny puppy, only a few months old! She would do best with other smaller or calm dogs so she doesn't get scared.",
+                    2,
+                    43.642567,
+                    -79.387054
                 ))
 
             this.userViewModel.insertAll(
@@ -205,12 +213,14 @@ class LandingActivity : AppCompatActivity(), View.OnClickListener, CompoundButto
                     "tp@tp.com",
                     "5675675678",
                     "123",
-                    "Ethan",
+                    "Hunter",
                     "Male",
-                    "Unkown",
-                    12,
-                    "big boy",
-                    54
+                    "Bulldog",
+                    7,
+                    "Hunter may look mean, but he's just a big lovebug. He loves to play tug of war and wrestle with his friends.",
+                    42,
+                    43.6205,
+                    79.5132
                 ))
         }catch (ex: Exception){
             Log.e(TAG, ex.toString())
