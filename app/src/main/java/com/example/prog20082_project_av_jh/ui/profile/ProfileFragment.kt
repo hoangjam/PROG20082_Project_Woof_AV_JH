@@ -154,7 +154,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         edtDogName.setText(matchedUser.dName)
                         this.spnGender.setSelection(resources.getStringArray(R.array.gender_array).indexOf(matchedUser.gender))
                         edtBreed.setText(matchedUser.breed)
-                        edtAge.setText(matchedUser.age.toString())
+                        edtAge.setText(matchedUser.age.toString() + " yrs")
                         edtBio.setText(matchedUser.bio)
                     }
                 else{
@@ -173,10 +173,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         edtEmail.isEnabled = true
         edtPhoneNumber.isEnabled = true
         edtDogName.isEnabled = true
-        this.spnGender.isEnabled = true
+        spnGender.isEnabled = true
         edtBreed.isEnabled = true
         edtAge.isEnabled = true
         edtBio.isEnabled = true
+
+        spnGender.setAlpha(1.0F)
+        edtAge.setText(edtAge.text.dropLast(4).toString())
     }
 
     fun disableEdit() {
@@ -190,6 +193,9 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         edtBreed.isEnabled = false
         edtAge.isEnabled = false
         edtBio.isEnabled = false
+
+        spnGender.setAlpha(0.5F)
+        edtAge.setText(edtAge.text.toString() + " yrs")
     }
 
     private fun saveToDB() {
@@ -200,7 +206,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         this.existingUser.dName = edtDogName.text.toString()
         this.existingUser.gender = spnGender.selectedItem.toString()
         this.existingUser.breed = edtBreed.text.toString()
-        this.existingUser.age = edtAge.text.toString().toInt()
+        this.existingUser.age = edtAge.text.toString().dropLast(4).toInt()
         this.existingUser.bio = edtBio.text.toString()
 
         //if email was changed, change shared preferences too

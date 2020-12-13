@@ -7,6 +7,7 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.Display
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +34,6 @@ import kotlinx.android.synthetic.main.activity_landing.*
 import kotlinx.android.synthetic.main.fragment_matched_profile.*
 
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -62,7 +62,7 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var tvOwnerName: TextView
     private lateinit var btnCall: Button
 
-    private lateinit var matchedPhoneHolder: TextView
+//    private lateinit var matchedPhoneHolder: TextView
 
     val REQUEST_CALL = 123
 
@@ -80,17 +80,17 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_matched_profile, container, false)
 
-        matchedPhoneHolder = view.hiddenEmail
+//        matchedPhoneHolder = view.hiddenEmail
 
-        var bundle = this.arguments
-
-        if (bundle != null) {
-            this.matchedEmail = bundle.get("matchedEmail").toString()
-            matchedPhoneHolder.setText(this.matchedEmail)
-//            Toast.makeText(this.requireContext(), this.matchedEmail, Toast.LENGTH_SHORT).show()
-        } else {
-            Log.e(TAG, "bundle not recieved...")
-        }
+//        var bundle = this.arguments
+//
+//        if (bundle != null) {
+//            this.matchedEmail = bundle.get("matchedEmail").toString()
+//            matchedPhoneHolder.setText(this.matchedEmail)
+////            Toast.makeText(this.requireContext(), this.matchedEmail, Toast.LENGTH_SHORT).show()
+//        } else {
+//            Log.e(TAG, "bundle not recieved...")
+//        }
 
         tvDogName = view.tvDogName
         tvDogAge = view.tvDogAge
@@ -104,8 +104,8 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
 
         userViewModel = UserViewModel(requireActivity().application)
 
-        if (!matchedEmail.isNullOrEmpty()) {
-            this.getMatchedUser()
+        if (receivedUser!= null) {
+            this.populateProfile(receivedUser)
         }
 
         //Log.e(TAG, matchedUser.toString())
@@ -119,16 +119,17 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getMatchedUser() {
-        this.userViewModel.allUsers.observe(viewLifecycleOwner, {users ->
-            if (users != null) {
-                for (user in users) {
-                    if (user != null && user.email.equals(this.matchedEmail)) {
-                        matchedUser = user
-                        populateProfile(user)
-                    }
-                }
-            }
-        })
+//        this.userViewModel.allUsers.observe(viewLifecycleOwner, {users ->
+//            if (users != null) {
+//                for (user in users) {
+//                    if (user != null && user.email.equals(this.matchedEmail)) {
+//                        matchedUser = user
+//                        populateProfile(user)
+//                    }
+//                }
+//            }
+//
+//        })
     }
 
     private fun populateProfile(mUser: User) {
@@ -139,7 +140,7 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
         tvDogSize.setText(mUser.dogSize.toString())
         tvBio.setText(mUser.bio)
         tvOwnerName.setText(mUser.oName)
-        matchedPhoneHolder.setText(mUser.phoneNumber)
+//        matchedPhoneHolder.setText(mUser.phoneNumber)
     }
 
     override fun onClick(v: View?) {
@@ -148,6 +149,7 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
                 fabToMap.id -> {
                     Log.e(TAG, "LOCATION BUTTON CLICKED")
                     val intent = Intent(activity, DisplayMapActivity::class.java)
+                    DisplayMapActivity.receivedUser = receivedUser
                     startActivity(intent)
                 }
                 btnCall.id -> {
@@ -159,7 +161,7 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
 
     private fun makeCall() {
 
-        val phoneNumber = matchedPhoneHolder.text.toString()
+        val phoneNumber = receivedUser.phoneNumber
         val callIntent = Intent(Intent.ACTION_CALL).apply {
             data = Uri.parse("tel:" + phoneNumber)
         }
@@ -185,6 +187,9 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
     }
 
     companion object {
+
+        lateinit var receivedUser : User
+
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
@@ -193,7 +198,6 @@ class MatchedProfileFragment : Fragment(), View.OnClickListener {
          * @param param2 Parameter 2.
          * @return A new instance of fragment MatchedProfileFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             MatchedProfileFragment().apply {

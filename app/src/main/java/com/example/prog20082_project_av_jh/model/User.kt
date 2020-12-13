@@ -66,7 +66,9 @@ data class User(
         breed: String,
         age: Int,
         bio: String,
-        dogSize: Int
+        dogSize: Int,
+        lat: Double,
+        lng: Double,
     ) : this(
         name,
         email,
@@ -82,7 +84,7 @@ data class User(
         arrayListOf<String>(),
         arrayListOf<String>(),
         arrayListOf<String>(),
-        0.0,
-        0.0
+        lat,
+        lng
     )
 }

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -55,7 +54,7 @@ android:layout_height="match_parent" >
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtOwner"
-            android:background="@android:color/transparent"/>
+            android:background="@color/white"/>
 
         <EditText
             android:id="@+id/edtEmail"
@@ -69,7 +68,7 @@ android:layout_height="match_parent" >
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtOwnerName"
-            android:background="@android:color/transparent"/>
+            android:background="@color/white"/>
 
         <EditText
             android:id="@+id/edtPhoneNumber"
@@ -83,7 +82,7 @@ android:layout_height="match_parent" >
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtEmail"
-            android:background="@android:color/transparent"/>
+            android:background="@color/white"/>
 
         <TextView
             android:id="@+id/tvDog"
@@ -111,7 +110,7 @@ android:layout_height="match_parent" >
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDog"
-            android:background="@android:color/transparent"/>
+            android:background="@color/white"/>
 
         <TextView
             android:id="@+id/tvGender"
@@ -127,7 +126,6 @@ android:layout_height="match_parent" >
             android:textSize="18sp"
             />
 
-
         <Spinner
             android:id="@+id/spnGender"
             android:layout_width="0dp"
@@ -137,7 +135,8 @@ android:layout_height="match_parent" >
             app:layout_constraintTop_toBottomOf="@+id/tvGender"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            />
 
         <EditText
             android:id="@+id/edtBreed"
@@ -146,14 +145,13 @@ android:layout_height="match_parent" >
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:background="@color/white"
             android:hint="@string/breed"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spnGender"
-            android:background="@android:color/transparent"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/spnGender" />
 
         <EditText
             android:id="@+id/edtAge"
@@ -167,7 +165,7 @@ android:layout_height="match_parent" >
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtBreed"
-            android:background="@android:color/transparent"/>
+            android:background="@color/white"/>
 
 <!--        <Button-->
 <!--            android:id="@+id/btnSave"-->
@@ -214,7 +212,8 @@ android:layout_height="match_parent" >
             android:background="@android:color/transparent"
             android:layout_marginBottom="16dp"
             android:gravity="top|left"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed nibh sed massa posuere rutrum ut id lectus. Cras porttitor nisi vel ex aliquet, a porttitor elit consequat. Donec arcu magna, elementum ut accumsan sed, blandit ut lectus. Pellentesque consectetur accumsan lectus, vel aliquam tortor tincidunt vitae. Nam fringilla maximus ipsum sed scelerisque. Aenean ornare sit amet tortor et tristique. Morbi congue lorem quam, quis sagittis orci cursus non. Proin semper blandit eros quis lobortis. Donec vulputate auctor sollicitudin. " />
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed nibh sed massa posuere rutrum ut id lectus. Cras porttitor nisi vel ex aliquet, a porttitor elit consequat. Donec arcu magna, elementum ut accumsan sed, blandit ut lectus. Pellentesque consectetur accumsan lectus, vel aliquam tortor tincidunt vitae. Nam fringilla maximus ipsum sed scelerisque. Aenean ornare sit amet tortor et tristique. Morbi congue lorem quam, quis sagittis orci cursus non. Proin semper blandit eros quis lobortis. Donec vulputate auctor sollicitudin. "
+            android:textColor="@android:color/darker_gray"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

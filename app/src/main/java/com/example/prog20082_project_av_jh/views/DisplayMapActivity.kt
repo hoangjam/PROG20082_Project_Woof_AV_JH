@@ -24,18 +24,22 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private val TAG = this@DisplayMapActivity.toString()
 
     private lateinit var locationManager: LocationManager
-    private lateinit var location: Location
+//    private lateinit var location: Location
     private lateinit var currentLocation: LatLng
     private var map: GoogleMap? = null
-    private val DEFAULT_ZOOM: Float = 5F
+    private val DEFAULT_ZOOM: Float = 15F // we want park level, so streets
     private lateinit var locationCallback: LocationCallback
 
     private var lat: Double = 0.0
     private var lng: Double = 0.0
 
     lateinit var userViewModel: UserViewModel
-    lateinit var existingUser: User
+//    lateinit var existingUser: User
     var currentUserEmail = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
+
+    companion object {
+        lateinit var receivedUser: User
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +53,8 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         // hardcoded for now.
-        this.currentLocation = LatLng(49.753, -98.535)
 
+        this.currentLocation = LatLng(receivedUser.lat!!.toDouble(), receivedUser.lng!!.toDouble())
 
         if (LocationManager.locationPermissionsGranted) {
             this.getLastLocation()
@@ -98,9 +102,9 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun addMarkerOnMap(location: LatLng) {
         if (this.map != null) {
             this.map!!.addMarker(
-                MarkerOptions().position(location).title("DOG HERE")
+                MarkerOptions().position(location).title("OTHER DOGE HERE")
             )
-            this.map!!.animateCamera(CameraUpdateFactory.newLatLngZoom(location, DEFAULT_ZOOM))
+            this.map!!.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, DEFAULT_ZOOM))
         }
     }
 
@@ -123,15 +127,10 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
             googleMap.uiSettings.isScrollGesturesEnabled = true
 
             googleMap.addMarker(
-                MarkerOptions().position(this.currentLocation).title("Dog is here")
+                MarkerOptions().position(this.currentLocation).title("YOU DOGE HERE")
             )
+
+            this.map = googleMap
         }
-
-        // arbitrarily move the camera to a matched dog position?
-
-//        // Add a marker in Sydney and move the camera
-//        val sydney = LatLng(-34.0, 151.0)
-//        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-//        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 }

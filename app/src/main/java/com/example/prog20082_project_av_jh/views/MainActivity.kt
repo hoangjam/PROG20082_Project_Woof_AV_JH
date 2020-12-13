@@ -25,6 +25,7 @@ import com.example.prog20082_project_av_jh.MatchesFragment
 import com.example.prog20082_project_av_jh.R
 import com.example.prog20082_project_av_jh.model.User
 import com.example.prog20082_project_av_jh.preferences.SharedPreferencesManager
+import com.example.prog20082_project_av_jh.ui.MatchedProfileFragment
 import com.example.prog20082_project_av_jh.ui.profile.ProfileFragment
 import com.example.prog20082_project_av_jh.viewmodels.UserViewModel
 import com.google.android.material.navigation.NavigationView
@@ -77,6 +78,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         //to access header in nav bar
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         val headerView: View = navigationView.getHeaderView(0)
+        navigationView.menu.findItem(R.id.nav_logout).setOnMenuItemClickListener {
+            this.logout()
+            true
+        }
 
         header = headerView.findViewById(R.id.nav_header)
         header.setOnClickListener(this)
@@ -89,6 +94,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         //showingProfile = User()
 
+    }
+
+    private fun logout() {
+        SharedPreferencesManager.removeAll()
+        this.finishAffinity()
+        val signInIntent = Intent(this, LandingActivity::class.java)
+        startActivity(signInIntent)
     }
 
     private fun getOwnerName() {
@@ -146,4 +158,5 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             super.onBackPressed()
         }
     }
+
 }
