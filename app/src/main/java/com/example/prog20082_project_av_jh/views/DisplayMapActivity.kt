@@ -24,17 +24,17 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private val TAG = this@DisplayMapActivity.toString()
 
     private lateinit var locationManager: LocationManager
-    private lateinit var location: Location
+//    private lateinit var location: Location
     private lateinit var currentLocation: LatLng
     private var map: GoogleMap? = null
-    private val DEFAULT_ZOOM: Float = 5F
+    private val DEFAULT_ZOOM: Float = 15F // we want park level, so streets
     private lateinit var locationCallback: LocationCallback
 
     private var lat: Double = 0.0
     private var lng: Double = 0.0
 
     lateinit var userViewModel: UserViewModel
-    lateinit var existingUser: User
+//    lateinit var existingUser: User
     var currentUserEmail = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
 
     companion object {
@@ -121,7 +121,7 @@ class DisplayMapActivity : AppCompatActivity(), OnMapReadyCallback {
         this.getLastLocation()
 
         if(googleMap != null){
-            googleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+            googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
             googleMap.uiSettings.isZoomControlsEnabled = true
             googleMap.uiSettings.isMyLocationButtonEnabled = true
             googleMap.uiSettings.isScrollGesturesEnabled = true
