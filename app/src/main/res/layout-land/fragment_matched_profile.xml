@@ -6,23 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HalfSwipeFragment">
 
-    <TextView
-        android:id="@+id/hiddenEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="email..."
-        android:visibility="invisible"/>
-
     <!--src is temporary until we can get database working-->
     <ImageView
         android:id="@+id/imgProfilePic"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="235dp"
         android:src="@drawable/samara_ball"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:padding="0dp"
         android:scaleType="centerCrop"/>
@@ -32,8 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:text="Samara"
-        app:layout_constraintTop_toBottomOf="@+id/imgProfilePic"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/imgProfilePic"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="16dp"
         android:fontFamily="casual"
@@ -47,7 +37,7 @@
         android:text="4yr"
         app:layout_constraintTop_toBottomOf="@+id/tvDogName"
         app:layout_constraintEnd_toStartOf="@+id/tvDogGender"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgProfilePic"
         android:fontFamily="sans-serif-light"
         android:textSize="18sp"
         android:textAlignment="center"/>
@@ -90,21 +80,22 @@
 
     <View
         android:id="@+id/vRuleLine"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:background="#c0c0c0"
         app:layout_constraintTop_toBottomOf="@id/tvDogSize"
+        app:layout_constraintStart_toEndOf="@+id/imgProfilePic"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"/>
 
     <ScrollView
         android:id="@+id/scrollViewBio"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/vRuleLine"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgProfilePic"
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingTop="12dp"
         android:paddingStart="12dp"
@@ -112,7 +103,7 @@
         android:paddingBottom="12dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="70dp">
+        android:layout_marginBottom="20dp">
 
         <!--TODO: See if this really doesn't scroll all the way to the bottom -->
 
@@ -155,20 +146,20 @@
                 android:layout_marginLeft="8dp"
                 app:layout_constraintHorizontal_bias="0.0"/>
 
-<!--            <Button-->
-<!--                android:id="@+id/btnCall"-->
-<!--                android:padding="10dp"-->
-<!--                android:layout_width="200dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:drawableLeft="@drawable/ic_baseline_local_phone_24"-->
-<!--                app:cornerRadius="50dp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/tvOwnerName"-->
-<!--                android:text="Call      "-->
-<!--                android:textFontWeight="1000"-->
-<!--                android:gravity="center"/>-->
+            <!--            <Button-->
+            <!--                android:id="@+id/btnCall"-->
+            <!--                android:padding="10dp"-->
+            <!--                android:layout_width="200dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="12dp"-->
+            <!--                android:drawableLeft="@drawable/ic_baseline_local_phone_24"-->
+            <!--                app:cornerRadius="50dp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tvOwnerName"-->
+            <!--                android:text="Call      "-->
+            <!--                android:textFontWeight="1000"-->
+            <!--                android:gravity="center"/>-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -181,12 +172,13 @@
         android:padding="10dp"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
         android:drawableLeft="@drawable/ic_baseline_local_phone_24"
         app:cornerRadius="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/fabLocation"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scrollViewBio"
+        app:layout_constraintTop_toBottomOf="@id/imgProfilePic"
         android:text="Call      "
         android:textFontWeight="1000"
         android:gravity="center"/>
@@ -195,15 +187,14 @@
         android:id="@+id/fabLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="20dp"
         android:backgroundTint="@color/bittersweet"
         android:clickable="true"
         android:src="@drawable/ic_baseline_location_on_24"
         app:tint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgProfilePic"
+        app:layout_constraintStart_toEndOf="@+id/btnCall"
+        app:layout_constraintEnd_toEndOf="@+id/imgProfilePic"
         android:scaleType="center"/>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
