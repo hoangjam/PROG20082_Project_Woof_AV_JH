@@ -40,14 +40,14 @@ object SharedPreferencesManager {
         return defaultValue
     }
 
-//    fun removeAll(key: String?) {
-//        with(sharedPreferences!!.edit()) {
-//            if (sharedPreferences == null && sharedPreferences!!.contains(key)) {
-//                remove(EMAIL)
-//                remove(PASSWORD)
-//
-//                apply()
-//            }
-//        }
-//    }
+    fun removeAll() {
+        with(sharedPreferences!!.edit()) {
+            if (sharedPreferences != null) {
+                remove(EMAIL)
+                remove(PASSWORD)
+
+                apply()
+            }
+        }
+    }
 }
